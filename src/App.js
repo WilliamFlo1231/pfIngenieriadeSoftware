@@ -1,15 +1,22 @@
 import './App.css';
-import NavbarComponent from './components/NavbarComponent';
-import TableComponent from './components/TableComponent';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Landing from './pages/Landing';
+import HorasExtra from './pages/HorasExtra';
+import Marcaciones from './pages/Marcaciones';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-      </header>
-        <NavbarComponent/>
-        <TableComponent />
+      
+        <Router>
+          <Routes>
+            <Route path="/" element={<Landing/>} />
+            <Route path="/HorasExtra" element={<HorasExtra/>} />
+            <Route path="/Marcaciones" element={<Marcaciones/>} />
+          </Routes>
+        </Router>
     </div>
+
   );
 }
 

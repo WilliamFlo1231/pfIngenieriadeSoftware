@@ -3,7 +3,6 @@ import React from 'react';
 const TableComponent = () => {
   return (
     <div class="contenedorPadre">
-      <h1>Tabla de Horas Extras</h1>
       <div class="contenedorHijo">
         <table className="table">
           <thead>

@@ -1,12 +1,18 @@
 .contenedorPadre{
-
-    justify-content: center;
-    align-items: center;
-    width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .contenedorHijo{
   width: 80%;
+}
+
+.titulo{
+  font-size: 2rem;
+  font-weight: bold;
+  text-align: center;
+  padding: 5rem;
 }
 
 .opcionesBTN{
