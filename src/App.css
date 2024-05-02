@@ -9,6 +9,10 @@
   width: 80%;
 }
 
+.contenedorhijo2{
+  width: 30%;
+}
+
 .titulo{
   font-size: 2rem;
   font-weight: bold;
@@ -21,4 +25,9 @@
   display: flex;
   align-items: center;
   justify-content: space-around;
+}
+
+.custom-tooltip {
+  --bs-tooltip-bg: var(--bd-violet-bg);
+  --bs-tooltip-color: var(--bs-white);
 }

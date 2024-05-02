@@ -1,9 +1,33 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
 import NavbarComponent from '../components/NavbarComponent'
 import TableComponent from '../components/TableComponent'
+import axios from 'axios'
 import Swal from 'sweetalert2'
 
+//ESTO UNICAMENTE LO VE EL ADMIN
 const Marcaciones = () => {
+  //declaramos los hooks
+  const url = "  http://localhost:3000/mar_marcas"
+  const [marcas, setMarcas] = useState([]);
+
+  useEffect(() => {
+    getMarcas();
+  }
+    , []);
+
+  const getMarcas = async () => {
+    const response = await axios.get(url);
+    setMarcas(response.data);
+    // console.log(response.data);
+  }
+
+  const deleteMarca = async (id) => {
+    const response = await axios.delete(`${url}/${id}`);
+    console.log(response);
+    getMarcas();
+  }
+
+
   // Función para mostrar SweetAlert de confirmación antes de modificar una marca
   const handleModificarMarca = () => {
     Swal.fire({
@@ -24,7 +48,7 @@ const Marcaciones = () => {
   };
 
   // Función para mostrar SweetAlert de confirmación antes de eliminar una marca
-  const handleEliminarMarca = () => {
+  const handleEliminarMarca = (id) => {
     Swal.fire({
       title: '¿Estás seguro?',
       text: '¿Quieres eliminar esta marca?',
@@ -37,6 +61,7 @@ const Marcaciones = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         // Aquí puedes agregar la lógica para eliminar la marca
+        deleteMarca(id);
         console.log('Marca eliminada');
       }
     });
@@ -44,26 +69,10 @@ const Marcaciones = () => {
 
   const accionesBotones = (row) => (
     <div className="opcionesBTN">
-      <button type="button" className="btn btn-outline-primary" onClick={handleModificarMarca}><i class="fa-solid fa-pen"></i></button>
-      <button type="button" className="btn btn-outline-danger" onClick={handleEliminarMarca}><i class="fa-solid fa-trash"></i></button>
+      <button type="button" className="btn btn-outline-primary custom-tooltip" data-toggle="tooltip" data-placement="top" title="Tooltip on top" onClick={handleModificarMarca}><i class="fa-solid fa-pen"></i></button>
+      <button type="button" className="btn btn-outline-danger" onClick={() => handleEliminarMarca(row.id)}><i class="fa-solid fa-trash"></i></button>
     </div>
   );
-
-  const datostabla = [
-    {
-      id: 1,
-      fecha: "2024-04-23",
-      hora: "09:00",
-      tipoMarca: "Entrada",
-    },
-    {
-      id: 2,
-      fecha: "2024-04-23",
-      hora: "13:00",
-      tipoMarca: "Salida",
-    },
-    // Otros datos...
-  ];
 
   const columnas = [
     {
@@ -73,17 +82,17 @@ const Marcaciones = () => {
     },
     {
       name: 'Fecha',
-      selector: row => row.fecha,
+      selector: row => row.mar_fecha,
       sortable: true,
     },
     {
       name: 'Hora',
-      selector: row => row.hora,
+      selector: row => row.mar_hora,
       sortable: true,
     },
     {
       name: 'Tipo de Marca',
-      selector: row => row.tipoMarca,
+      selector: row => row.mar_estado,
       sortable: true,
     },
     {
@@ -101,7 +110,7 @@ const Marcaciones = () => {
       <div className="titulo">
         <h1>Marcaciones</h1>
       </div>
-      <TableComponent datostabla={datostabla} columnas={columnas} />
+      <TableComponent datostabla={marcas} columnas={columnas} />
     </div>
   )
 };

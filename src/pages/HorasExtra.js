@@ -1,13 +1,51 @@
 import React from 'react'
 import TableComponent from '../components/TableComponent'
 import NavbarComponent from '../components/NavbarComponent'
+import Swal from 'sweetalert2'
 
 const HorasExtra = () => {
+  const handleModificarMarca = () => {
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: '¿Quieres modificar esta hora extra?',
+      icon: 'info',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, modificar',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Aquí puedes agregar la lógica para modificar la marca
+        console.log('Marca modificada');
+      }
+    });
+  };
+
+  // Función para mostrar SweetAlert de confirmación antes de eliminar una marca
+  const handleEliminarMarca = () => {
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: '¿Quieres eliminar esta hora extra?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Aquí puedes agregar la lógica para eliminar la marca
+        console.log('Marca eliminada');
+      }
+    });
+  };
+
   const accionesBotones = (row) => (
     <div className="opcionesBTN">
-      <button type="button" className="btn btn-outline-success"><i class="fa-solid fa-check"></i></button>
-      <button type="button" className="btn btn-outline-primary"><i class="fa-solid fa-pen"></i></button>
-      <button type="button" className="btn btn-outline-danger"><i class="fa-solid fa-trash"></i></button>
+      <button type="button" className="btn btn-outline-success" onClick={handleModificarMarca}><i class="fa-solid fa-check"></i></button>
+      <button type="button" className="btn btn-outline-primary"onClick={handleModificarMarca}><i class="fa-solid fa-pen"></i></button>
+      <button type="button" className="btn btn-outline-danger"onClick={handleEliminarMarca}><i class="fa-solid fa-trash"></i></button>
     </div>
   );  
 

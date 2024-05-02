@@ -1,0 +1,22 @@
+{
+  "mar_marcas": [
+    {
+      "id": 17,
+      "mar_fecha": "1/5/2024",
+      "mar_hora": "18:41:34",
+      "mar_estado": "Entrada"
+    },
+    {
+      "id": 3,
+      "mar_fecha": "1/5/2024",
+      "mar_hora": "19:07:07",
+      "mar_estado": "Inicio Almuerzo"
+    },
+    {
+      "id": 4,
+      "mar_fecha": "1/5/2024",
+      "mar_hora": "19:07:14",
+      "mar_estado": "Salida"
+    }
+  ]
+}
