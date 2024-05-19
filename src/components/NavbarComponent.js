@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, BrowserRouter } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const NavbarComponent = () => {
   return (
@@ -23,9 +23,15 @@ const NavbarComponent = () => {
             <li class="nav-item dropdown">
               <Link class="nav-link" to={"/Marcacion"}>Marcacion</Link>
             </li>            
-            <li class="nav-item">
-              <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+            <li class="nav-item dropdown">
+              <Link class="nav-link" to={"/IngresoExpediente"}>Ingreso Expediente</Link>
             </li>
+            <li class="nav-item dropdown">
+              <Link class="nav-link" to={"/SolicitudPermisos"}>Solicitud permisos-pend</Link>
+            </li>            
+            <li class="nav-item dropdown">
+              <Link class="nav-link" to={"/SolicitudVacaciones"}>Solicitud Vacaciones</Link>
+            </li>                        
           </ul>
           <form class="d-flex" role="search">
             <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
