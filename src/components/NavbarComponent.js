@@ -11,32 +11,43 @@ const NavbarComponent = () => {
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item">
-              <Link class="nav-link active" aria-current="page" to="/HorasExtra">Horas Extra</Link >
-            </li>
-            <li class="nav-item">
-              <Link class="nav-link" to={"/Marcaciones"}>Marcaciones</Link>
-            </li>
             <li class="nav-item dropdown">
-              <Link class="nav-link" to={"/AutoGestion"}>Auto Gestion</Link>
-            </li>
-            <li class="nav-item dropdown">
-              <Link class="nav-link" to={"/Marcacion"}>Marcacion</Link>
-            </li>            
-            <li class="nav-item dropdown">
-              <Link class="nav-link" to={"/IngresoExpediente"}>Ingreso Expediente</Link>
+              <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Expedientes <i class="fa-solid fa-person"></i>
+              </a>
+              <ul class="dropdown-menu">
+                <li><Link class="dropdown-item" to={"/ConsultaExpedientes"}>Consulta de Expediente</Link></li>
+                <li><Link class="dropdown-item" to={"/IngresoExpediente"}>Ingreso de Expediente</Link></li>
+                <li><Link class="dropdown-item" to={"/ConsultaExpedientes"}>Modificacion de expediente</Link></li>
+                <li><Link class="dropdown-item" to={"/Marcaciones"}>Marcaciones</Link></li>
+                <li><Link class="dropdown-item" to={"/Plazas"}>Plazas</Link></li>
+              </ul>
             </li>
             <li class="nav-item dropdown">
-              <Link class="nav-link" to={"/SolicitudPermisos"}>Solicitud permisos-pend</Link>
-            </li>            
+              <a class="nav-link dropdown-toggle p5" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Apartado Salarial <i class="fa-solid fa-dollar-sign"></i>
+              </a>
+              <ul class="dropdown-menu">
+                <li><Link class="dropdown-item" to={"/Plazas"}>Historial de pago</Link></li>
+                <li><Link class="dropdown-item" to={"/ConsultaDescuentos"}>Descuentos</Link></li>
+                <li><Link class="dropdown-item" to={"/ConsultaIngresos"}>Ingresos</Link></li>
+                <li><Link class="dropdown-item" to={"/ConsultaPeriodoPlanilla"}>Periodos de Planilla</Link></li>
+              </ul>
+            </li>
             <li class="nav-item dropdown">
-              <Link class="nav-link" to={"/SolicitudVacaciones"}>Solicitud Vacaciones</Link>
-            </li>                        
+              <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Vacaciones y permisos <i class="fa-solid fa-umbrella-beach"></i>
+              </a>
+              <ul class="dropdown-menu">
+                <li><Link class="dropdown-item" to={"/ConsultaExpedientes"}>Consulta de Expediente</Link></li>
+              </ul>
+            </li>
           </ul>
-          <form class="d-flex" role="search">
-            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-            <button class="btn btn-outline-success" type="submit">Search</button>
-          </form>
+          <div class="d-flex">
+            <Link to={"/Login"}>
+              <button class="btn btn-outline-danger px-4" >Salir</button>
+            </Link>
+          </div>
         </div>
       </div>
     </nav>

@@ -1,83 +1,39 @@
 import React, { useState, useEffect } from 'react';
 import NavbarComponent from '../components/NavbarComponent';
 import TableComponent from '../components/TableComponent';
+import apiService from '../services/services';
 import Swal from 'sweetalert2';
-import axios from 'axios';
 
 const PeriodoPlanilla = () => {
-  const url = "http://localhost:3000/periodos_planilla";
   const [periodoPlanilla, setPeriodoPlanilla] = useState([]);
-
-  const urlTPL = "http://localhost:3000/tpl_tipo_planilla";
   const [tipoPlanilla, setTipoPlanilla] = useState([]);
 
-
-
   useEffect(() => {
-    getPeriodoPlanilla();
-    getTipoPlanilla();
+    const fetchData = async () => {
+      try {
+        const dataPeriodoPlanilla = await apiService.getPeriodoPlanilla();
+        setPeriodoPlanilla(dataPeriodoPlanilla);
+
+        const dataTipoPlanilla = await apiService.getTipoPlanilla();
+        setTipoPlanilla(dataTipoPlanilla);
+      } catch (error) {
+        console.error('Error al obtener datos:', error);
+        Swal.fire({
+          title: 'Error',
+          text: 'No se pudo obtener la información necesaria.',
+          icon: 'error',
+          confirmButtonText: 'Ok',
+        });
+      }
+    };
+
+    fetchData();
   }, []);
-
-  //funciones para crud
-  const getPeriodoPlanilla = async () => {
-    try {
-      const response = await axios.get(url);
-      setPeriodoPlanilla(response.data);
-    } catch (error) {
-      console.error('Error al realizar la consulta:', error);
-    }
-  };
-
-  const getTipoPlanilla = async () => {
-    try {
-      const response = await axios.get(urlTPL);
-      setTipoPlanilla(response.data);
-    } catch (error) {
-      console.error('Error al realizar la consulta:', error);
-    }
-  }
-
-  const getPeriodoPlanillaId = async (id) => {
-    try {
-      const response = await axios.get(`${url}/${id}`);
-      return response.data;
-    } catch (error) {
-      console.error('Error al consultar el Período Planilla por ID:', error);
-      throw error;
-    }
-  };
-
-  const deletePeriodoPlanilla = async (id) => {
-    const response = await axios.delete(`${url}/${id}`);
-    console.log(response);
-    getPeriodoPlanilla();
-  }
-
-  const postPeriodoPlanilla = async (nuevoPeriodoPlanilla) => {
-    try {
-      const response = await axios.post(url, nuevoPeriodoPlanilla);
-      console.log('Nuevo periodo de planilla creado:', response.data);
-      getPeriodoPlanilla(); // Actualiza la lista después de crear el nuevo periodo
-    } catch (error) {
-      console.error('Error al crear el nuevo periodo de planilla:', error);
-      throw error;
-    }
-  };
-
-  const updatePeriodoPlanilla = async (id, newData) => {
-    try {
-      const response = await axios.put(`${url}/${id}`, newData);
-      console.log(response);
-      getPeriodoPlanilla();
-    } catch (error) {
-      console.error('Error al actualizar el registro de planilla:', error);
-    }
-  };
 
   //metodos para sweetalert
   const handleConsultaPeriodoPlanilla = async (id) => {
     try {
-      const periodoPlanilla = await getPeriodoPlanillaId(id);
+      const periodoPlanilla = await apiService.getPeriodoPlanillaId(id);
       Swal.fire({
         title: 'Información del Período Planilla',
         html: `
@@ -111,8 +67,8 @@ const PeriodoPlanilla = () => {
 
   const handleModificarPeriodoPlanilla = async (id) => {
     try {
-      await getTipoPlanilla();
-      const periodoPlanilla = await getPeriodoPlanillaId(id);
+      await apiService.getTipoPlanilla();
+      const periodoPlanilla = await apiService.getPeriodoPlanillaId(id);
       Swal.fire({
         title: 'Modificar Periodo Planilla',
         html: `
@@ -165,7 +121,7 @@ const PeriodoPlanilla = () => {
           const mes = Swal.getPopup().querySelector('#mes').value;
 
           // Llamar a la función para actualizar el periodo de planilla
-          updatePeriodoPlanilla(periodoPlanilla.id, {
+          apiService.updatePeriodoPlanilla(periodoPlanilla.id, {
             ppl_codigo_tpl: codigo_tpl,
             ppl_codigo_visual: codigo_visual,
             ppl_estado: estado,
@@ -174,10 +130,13 @@ const PeriodoPlanilla = () => {
             ppl_anio: anio,
             ppl_mes: mes
           });
+          
         }
-      }).then((result) => {
+      }).then(async (result) => {
         if (result.isConfirmed) {
           Swal.fire('Actualización confirmada', '', 'success');
+          const dataPeriodoPlanilla = await apiService.getPeriodoPlanilla();
+          setPeriodoPlanilla(dataPeriodoPlanilla);
         }
       });
     } catch (error) {
@@ -202,10 +161,12 @@ const PeriodoPlanilla = () => {
       cancelButtonColor: '#d33',
       confirmButtonText: 'Sí, eliminar',
       cancelButtonText: 'Cancelar'
-    }).then((result) => {
+    }).then(async(result) => {
       if (result.isConfirmed) {
         // Aquí puedes agregar la lógica para eliminar la PeriodoPlanilla
-        deletePeriodoPlanilla(id);
+        await apiService.deletePeriodoPlanilla(id);
+        const dataPeriodoPlanilla = await apiService.getPeriodoPlanilla();
+        setPeriodoPlanilla(dataPeriodoPlanilla);
         console.log('PeriodoPlanilla eliminada');
       }
     });
@@ -213,7 +174,7 @@ const PeriodoPlanilla = () => {
 
   const handlePostPeriodoPlanilla = async () => {
     // Espera a que se resuelva la promesa de getTipoPlanilla
-    await getTipoPlanilla();
+    await apiService.getTipoPlanilla();
 
     // Ahora tipoPlanilla tiene los datos actualizados
     Swal.fire({
@@ -269,7 +230,7 @@ const PeriodoPlanilla = () => {
 
         // Crear el nuevo periodo de planilla
         try {
-          await postPeriodoPlanilla({
+          await apiService.postPeriodoPlanilla({
             ppl_codigo_tpl: codigo_tpl,
             ppl_codigo_visual: codigo_visual,
             ppl_estado: estado,
@@ -279,6 +240,8 @@ const PeriodoPlanilla = () => {
             ppl_mes: mes
           });
           Swal.fire('Creación exitosa', 'El nuevo periodo de planilla ha sido creado.', 'success');
+          const dataPeriodoPlanilla = await apiService.getPeriodoPlanilla();
+          setPeriodoPlanilla(dataPeriodoPlanilla);
         } catch (error) {
           console.error('Error al crear el periodo de planilla:', error);
           Swal.fire('Error', 'No se pudo crear el nuevo periodo de planilla.', 'error');

@@ -2,83 +2,39 @@ import React, { useState, useEffect } from 'react';
 import NavbarComponent from '../components/NavbarComponent';
 import TableComponent from '../components/TableComponent';
 import Swal from 'sweetalert2';
-import axios from 'axios';
+import apiService from '../services/services';
 
 const Plazas = () => {
-  const url = "http://localhost:3000/plz_plazas";
   const [plazas, setPlazas] = useState([]);
-
-  const urlCCO = "http://localhost:3000/cco_centro_costos";
   const [centroDeCosto, setCentroDeCosto] = useState([]);
 
 
   useEffect(() => {
-    getPlazas();
-    getCentroDeCosto();
-  }, []);
+    const fetchData = async () => {
+      try {
+        const dataPlazas = await apiService.getPlazas();
+        setPlazas(dataPlazas);        
 
-  //funciones para crud
-  const getPlazas = async () => {
-    try {
-      const response = await axios.get(url);
-      setPlazas(response.data);
-    } catch (error) {
-      console.error('Error al realizar la consulta:', error);
-    }
-  };
+        const dataCentroDeCosto = await apiService.getCentroDeCosto();
+        setCentroDeCosto(dataCentroDeCosto);
+      } catch (error) {
+        console.error('Error al obtener datos:', error);
+        Swal.fire({
+          title: 'Error',
+          text: 'No se pudo obtener la información necesaria.',
+          icon: 'error',
+          confirmButtonText: 'Ok',
+        });
+      }
+    };
 
-  const getCentroDeCosto = async () => {
-    try {
-      const response = await axios.get(urlCCO);
-      setCentroDeCosto(response.data);
-    } catch (error) {
-      console.error('Error al realizar la consulta:', error);
-    }
-  }
-
-
-
-  const getPlazasId = async (id) => {
-    try {
-      const response = await axios.get(`${url}/${id}`);
-      return response.data;
-    } catch (error) {
-      console.error('Error al consultar la plaza por ID:', error);
-      throw error;
-    }
-  };
-
-  const deletePlazas = async (id) => {
-    const response = await axios.delete(`${url}/${id}`);
-    console.log(response);
-    getPlazas();
-  }
-
-  const postPlazas = async (nuevoIngreso) => {
-    try {
-      const response = await axios.post(url, nuevoIngreso);
-      console.log('Nuevo ingreso creado:', response.data);
-      getPlazas(); // Actualiza la lista después de crear el ingereso
-    } catch (error) {
-      console.error('Error al crear la nueva plaza:', error);
-      throw error;
-    }
-  };
-
-  const updatePlazas = async (id, newData) => {
-    try {
-      const response = await axios.put(`${url}/${id}`, newData);
-      console.log(response);
-      getPlazas();
-    } catch (error) {
-      console.error('Error al actualizar la plaza:', error);
-    }
-  };
+    fetchData();
+  }, []);  
 
   //metodos para sweetalert
   const handleConsultaPlazas = async (id) => {
     try {
-      const plazas = await getPlazasId(id);
+      const plazas = await apiService.getPlazasId(id);
       Swal.fire({
         title: 'Información de plazas',
         html: `
@@ -111,8 +67,8 @@ const Plazas = () => {
 
   const handleModificarPlazas = async (id) => {
     try {
-      await getCentroDeCosto();
-      const plazas = await getPlazasId(id);
+      await apiService.getCentroDeCosto();
+      const plazas = await apiService.getPlazasId(id);
       Swal.fire({
         title: 'Modificar Plaza',
         html: `
@@ -164,7 +120,7 @@ const Plazas = () => {
           const plz_fecha_fin = Swal.getPopup().querySelector('#plz_fecha_fin').value;
 
           // Llamar a la función para actualizar el periodo de planilla
-          updatePlazas(plazas.id, {
+          apiService.updatePlazas(plazas.id, {
             plz_codcco: plz_codcco,
             plz_nombre: plz_nombre,
             plz_maximo_empleados: plz_maximo_empleados,
@@ -174,9 +130,11 @@ const Plazas = () => {
 
           });
         }
-      }).then((result) => {
+      }).then(async(result) => {
         if (result.isConfirmed) {
           Swal.fire('Actualización confirmada', '', 'success');
+          const dataPlazas = await apiService.getPlazas();
+          setPlazas(dataPlazas);             
         }
       });
     } catch (error) {
@@ -201,18 +159,20 @@ const Plazas = () => {
       cancelButtonColor: '#d33',
       confirmButtonText: 'Sí, eliminar',
       cancelButtonText: 'Cancelar'
-    }).then((result) => {
+    }).then(async(result) => {
       if (result.isConfirmed) {
         // Aquí puedes agregar la lógica para eliminar la plazas
-        deletePlazas(id);
+        await apiService.deletePlazas(id);
         console.log('plaza eliminada');
+        const dataPlazas = await apiService.getPlazas();
+        setPlazas(dataPlazas);   
       }
     });
   };
 
   const handlePostPlazas = async () => {
     // Espera a que se resuelva la promesa de los tres get
-    await getCentroDeCosto();
+    await apiService.getCentroDeCosto();
 
     // Ahora tipoPlanilla tiene los datos actualizados
     Swal.fire({
@@ -267,7 +227,7 @@ const Plazas = () => {
         var isTrueSet = (plz_es_temporal === 'true');
         // Crear el nuevo ingreso
         try {
-          await postPlazas({
+          await apiService.postPlazas({
             plz_codcco: plz_codcco,
             plz_nombre: plz_nombre,
             plz_maximo_empleados: plz_maximo_empleados,
@@ -276,6 +236,8 @@ const Plazas = () => {
             plz_fecha_fin: plz_fecha_fin,
           });
           Swal.fire('Creación exitosa', 'La nuevo plaza ha sido creado.', 'success');
+          const dataPlazas = await apiService.getPlazas();
+          setPlazas(dataPlazas);             
         } catch (error) {
           console.error('Error al crear la plaza:', error);
           Swal.fire('Error', 'No se pudo crear la plaza.', 'error');

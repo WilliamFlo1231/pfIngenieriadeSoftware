@@ -1,109 +1,48 @@
 import React, { useState, useEffect } from 'react';
 import NavbarComponent from '../components/NavbarComponent';
 import TableComponent from '../components/TableComponent';
+import apiService from '../services/services';
 import Swal from 'sweetalert2';
-import axios from 'axios';
+
 
 const Descuentos = () => {
-  const url = "http://localhost:3000/dss_descuentos";
   const [descuentos, setdescuentos] = useState([]);
-
-  const urlEXP = "http://localhost:3000/expediente";
   const [expediente, setExpediente] = useState([]);
-
-  const urlPPL = "http://localhost:3000/periodos_planilla";
   const [periodoPlanilla, setPeriodoPlanilla] = useState([]);
-
-  const urlTDC = "http://localhost:3000/tdc_tipo_descuento";
-  const [tipoDescuento, setTipoDescuento] = useState([]);  
-
-
+  const [tipoDescuento, setTipoDescuento] = useState([]);
 
   useEffect(() => {
-    getDescuentos();
-    getExpediente();
-    getPeriodoPlanilla();
-    getTipoDescuento();
+    const fetchData = async () => {
+      try {
+        const dataDescuentos = await apiService.getDescuentos();
+        setdescuentos(dataDescuentos);
+
+        const dataExpediente = await apiService.getExpediente();
+        setExpediente(dataExpediente);
+
+        const dataPeriodoPlanilla = await apiService.getPeriodoPlanilla();
+        setPeriodoPlanilla(dataPeriodoPlanilla);
+
+        const dataTipoDescuento = await apiService.getTipoDescuento();
+        setTipoDescuento(dataTipoDescuento);
+      } catch (error) {
+        console.error('Error al obtener datos:', error);
+        Swal.fire({
+          title: 'Error',
+          text: 'No se pudo obtener la información necesaria.',
+          icon: 'error',
+          confirmButtonText: 'Ok',
+        });
+      }
+    };
+
+    fetchData();
   }, []);
-
-  //funciones para crud
-  const getDescuentos = async () => {
-    try {
-      const response = await axios.get(url);
-      setdescuentos(response.data);
-    } catch (error) {
-      console.error('Error al realizar la consulta:', error);
-    }
-  };
-
-  const getExpediente = async () => {
-    try {
-      const response = await axios.get(urlEXP);
-      setExpediente(response.data);
-    } catch (error) {
-      console.error('Error al realizar la consulta:', error);
-    }
-  }
-
-  const getPeriodoPlanilla = async () => {
-    try {
-      const response = await axios.get(urlPPL);
-      setPeriodoPlanilla(response.data);
-    } catch (error) {
-      console.error('Error al realizar la consulta:', error);
-    }
-  }
-
-  const getTipoDescuento = async () => {
-    try {
-      const response = await axios.get(urlTDC);
-      setTipoDescuento(response.data);
-    } catch (error) {
-      console.error('Error al realizar la consulta:', error);
-    }
-  }
-
-  const getDescuentosId = async (id) => {
-    try {
-      const response = await axios.get(`${url}/${id}`);
-      return response.data;
-    } catch (error) {
-      console.error('Error al consultar el Período Planilla por ID:', error);
-      throw error;
-    }
-  };
-
-  const deleteDescuentos = async (id) => {
-    const response = await axios.delete(`${url}/${id}`);
-    console.log(response);
-    getDescuentos();
-  }
-
-  const postDescuentos = async (nuevoDescuento) => {
-    try {
-      const response = await axios.post(url, nuevoDescuento);
-      console.log('Nuevo descuento creado:', response.data);
-      getDescuentos(); // Actualiza la lista después de crear el nuevo descuento
-    } catch (error) {
-      console.error('Error al crear el nuevo descuento:', error);
-      throw error;
-    }
-  };
-
-  const updateDescuentos = async (id, newData) => {
-    try {
-      const response = await axios.put(`${url}/${id}`, newData);
-      console.log(response);
-      getDescuentos();
-    } catch (error) {
-      console.error('Error al actualizar el registro de descuento:', error);
-    }
-  };
 
   //metodos para sweetalert
   const handleConsultaDescuentos = async (id) => {
     try {
-      const descuentos = await getDescuentosId(id);
+      const descuentos = await apiService.getDescuentosId(id);
       Swal.fire({
         title: 'Información del Descuento',
         html: `
@@ -134,10 +73,10 @@ const Descuentos = () => {
 
   const handleModificarDescuentos = async (id) => {
     try {
-      await getExpediente();
-      await getPeriodoPlanilla();
-      await getTipoDescuento();
-      const descuentos = await getDescuentosId(id);
+      await apiService.getExpediente();
+      await apiService.getPeriodoPlanilla();
+      await apiService.getTipoDescuento();
+      const descuentos = await apiService.getDescuentosId(id);
       Swal.fire({
         title: 'Modificar Descuento',
         html: `
@@ -182,16 +121,18 @@ const Descuentos = () => {
           const valor = Swal.getPopup().querySelector('#valor').value;
 
           // Llamar a la función para actualizar el descuento
-          updateDescuentos(descuentos.id, {
+          apiService.updateDescuentos(descuentos.id, {
             dss_codexp: codigo_exp,
             dss_codppl: codigo_ppl,
             dss_codtdc: codigo_tdc,
             dss_valor: valor
           });
         }
-      }).then((result) => {
+      }).then(async(result) => {
         if (result.isConfirmed) {
           Swal.fire('Actualización confirmada', '', 'success');
+          const dataDescuentos = await apiService.getDescuentos();
+          setdescuentos(dataDescuentos);          
         }
       });
     } catch (error) {
@@ -216,10 +157,11 @@ const Descuentos = () => {
       cancelButtonColor: '#d33',
       confirmButtonText: 'Sí, eliminar',
       cancelButtonText: 'Cancelar'
-    }).then((result) => {
+    }).then(async(result) => {
       if (result.isConfirmed) {
-        // Aquí puedes agregar la lógica para eliminar la descuentos
-        deleteDescuentos(id);
+        await apiService.deleteDescuentos(id);
+        const dataDescuentos = await apiService.getDescuentos();
+        setdescuentos(dataDescuentos);        
         console.log('descuento eliminado');
       }
     });
@@ -227,9 +169,9 @@ const Descuentos = () => {
 
   const handlePostdescuentos = async () => {
     // Espera a que se resuelva la promesa de getTipoPlanilla
-    await getExpediente();
-    await getPeriodoPlanilla();
-    await getTipoDescuento()
+    await apiService.getExpediente();
+    await apiService.getPeriodoPlanilla();
+    await apiService.getTipoDescuento()
 
     // Ahora tipoPlanilla tiene los datos actualizados
     Swal.fire({
@@ -270,21 +212,23 @@ const Descuentos = () => {
       cancelButtonText: 'Cancelar',
       preConfirm: async () => {
         // Obtener los valores de los inputs
-          // Obtener los valores de los inputs
-          const codigo_exp = Swal.getPopup().querySelector('#codigo_exp').value;
-          const codigo_ppl = Swal.getPopup().querySelector('#codigo_ppl').value;
-          const codigo_tdc = Swal.getPopup().querySelector('#codigo_tdc').value;
-          const valor = Swal.getPopup().querySelector('#valor').value;
+        // Obtener los valores de los inputs
+        const codigo_exp = Swal.getPopup().querySelector('#codigo_exp').value;
+        const codigo_ppl = Swal.getPopup().querySelector('#codigo_ppl').value;
+        const codigo_tdc = Swal.getPopup().querySelector('#codigo_tdc').value;
+        const valor = Swal.getPopup().querySelector('#valor').value;
 
         // Crear el nuevo descuento
         try {
-          await postDescuentos({
+          await apiService.postDescuentos({
             dss_codexp: codigo_exp,
             dss_codppl: codigo_ppl,
             dss_codtdc: codigo_tdc,
             dss_valor: valor
           });
           Swal.fire('Creación exitosa', 'El nuevo descuento ha sido creado.', 'success');
+          const dataDescuentos = await apiService.getDescuentos();
+          setdescuentos(dataDescuentos);          
         } catch (error) {
           console.error('Error al crear el descuento:', error);
           Swal.fire('Error', 'No se pudo crear el nuevo descuento.', 'error');

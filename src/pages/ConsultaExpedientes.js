@@ -1,35 +1,33 @@
 import React, { useState, useEffect } from 'react';
 import NavbarComponent from '../components/NavbarComponent';
 import TableComponent from '../components/TableComponent';
-import axios from 'axios';
+import apiService from '../services/services';
 import Swal from 'sweetalert2';
 
 const ConsultaExpedientes = () => {
-  const url = "http://localhost:3000/expediente"; // Cambia la URL según corresponda
   const [expedientes, setExpedientes] = useState([]);
 
+
   useEffect(() => {
-    getExpedientes();
-  }, []);
+    const fetchData = async () => {
+      try {
+        const dataExpedientes = await apiService.getExpedientes();
+        setExpedientes(dataExpedientes);        
 
-  const getExpedientes = async () => {
-    try {
-      const response = await axios.get(url);
-      setExpedientes(response.data);
-    } catch (error) {
-      console.error('Error al obtener los expedientes:', error);
-    }
-  };
+      } catch (error) {
+        console.error('Error al obtener datos:', error);
+        Swal.fire({
+          title: 'Error',
+          text: 'No se pudo obtener la información necesaria.',
+          icon: 'error',
+          confirmButtonText: 'Ok',
+        });
+      }
+    };
 
-  const deleteExpediente = async (codigo) => {
-    try {
-      await axios.delete(`${url}/${codigo}`);
-      getExpedientes();
-      console.log(`Expediente con código ${codigo} eliminado`);
-    } catch (error) {
-      console.error('Error al eliminar el expediente:', error);
-    }
-  };
+    fetchData();
+  }, []);  
+
 
   const handleEliminarExpediente = (codigo) => {
     Swal.fire({
@@ -41,9 +39,11 @@ const ConsultaExpedientes = () => {
       cancelButtonColor: '#d33',
       confirmButtonText: 'Sí, eliminar',
       cancelButtonText: 'Cancelar'
-    }).then((result) => {
+    }).then(async(result) => {
       if (result.isConfirmed) {
-        deleteExpediente(codigo);
+        await apiService.deleteExpediente(codigo);
+        const dataExpedientes = await apiService.getExpedientes();
+        setExpedientes(dataExpedientes);              
       }
     });
   };
@@ -57,32 +57,32 @@ const ConsultaExpedientes = () => {
   const columnas = [
     {
       name: 'Código',
-      selector: row => row.codigo,
+      selector: row => row.id,
       sortable: true,
     },
     {
       name: 'Nombre',
-      selector: row => row.nombre,
+      selector: row => row.exp_nombres,
       sortable: true,
     },
     {
       name: 'Apellido',
-      selector: row => row.apellido,
+      selector: row => row.exp_apellidos,
       sortable: true,
     },
     {
       name: 'Planilla',
-      selector: row => row.planilla,
+      selector: row => row.exp_planilla,
       sortable: true,
     },
     {
       name: 'Jornada',
-      selector: row => row.jornada,
+      selector: row => row.exp_codjor,
       sortable: true,
     },
     {
       name: 'Forma de Pago',
-      selector: row => row.forma_pago,
+      selector: row => row.exp_codfpa,
       sortable: true,
     },
     {

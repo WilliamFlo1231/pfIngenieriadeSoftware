@@ -2,105 +2,47 @@ import React, { useState, useEffect } from 'react';
 import NavbarComponent from '../components/NavbarComponent';
 import TableComponent from '../components/TableComponent';
 import Swal from 'sweetalert2';
-import axios from 'axios';
+import apiService from '../services/services';
 
 const Ingresos = () => {
-  const url = "http://localhost:3000/ingresos";
   const [ingresos, setingresos] = useState([]);
-
-  const urlPPL = "http://localhost:3000/periodos_planilla";
   const [periodoPlanilla, setPeriodoPlanilla] = useState([]);
-
-  const urlEXP = "http://localhost:3000/expediente";
   const [expendiente, setExpediente] = useState([]);
-
-  const urlTIG = "http://localhost:3000/tipo_ingreso";
   const [tipoIngreso, setTipoIngreso] = useState([]);
 
   useEffect(() => {
-    getIngresos();
-    getExpendiente();
-    getTipoIngreso();
-    getPeriodoPlanilla();
+    const fetchData = async () => {
+      try {
+        const dataIngresos = await apiService.getIngresos();
+        setingresos(dataIngresos);
+
+        const dataPeriodoPlanilla = await apiService.getPeriodoPlanilla();
+        setPeriodoPlanilla(dataPeriodoPlanilla);
+
+        const dataExpendiente = await apiService.getExpendiente();
+        setExpediente(dataExpendiente);
+
+        const dataTipoIngreso = await apiService.getTipoIngreso();
+        setTipoIngreso(dataTipoIngreso);
+
+      } catch (error) {
+        console.error('Error al obtener datos:', error);
+        Swal.fire({
+          title: 'Error',
+          text: 'No se pudo obtener la información necesaria.',
+          icon: 'error',
+          confirmButtonText: 'Ok',
+        });
+      }
+    };
+
+    fetchData();
   }, []);
-
-  //funciones para crud
-  const getIngresos = async () => {
-    try {
-      const response = await axios.get(url);
-      setingresos(response.data);
-    } catch (error) {
-      console.error('Error al realizar la consulta:', error);
-    }
-  };
-
-  const getExpendiente = async () => {
-    try {
-      const response = await axios.get(urlEXP);
-      setExpediente(response.data);
-    } catch (error) {
-      console.error('Error al realizar la consulta:', error);
-    }
-  }
-
-  const getTipoIngreso = async () => {
-    try {
-      const response = await axios.get(urlTIG);
-      setTipoIngreso(response.data);
-    } catch (error) {
-      console.error('Error al realizar la consulta:', error);
-    }
-  }
-  const getPeriodoPlanilla = async () => {
-    try {
-      const response = await axios.get(urlPPL);
-      setPeriodoPlanilla(response.data);
-    } catch (error) {
-      console.error('Error al realizar la consulta:', error);
-    }
-  }
-
-  const getIngresosId = async (id) => {
-    try {
-      const response = await axios.get(`${url}/${id}`);
-      return response.data;
-    } catch (error) {
-      console.error('Error al consultar el Período Planilla por ID:', error);
-      throw error;
-    }
-  };
-
-  const deleteIngresos = async (id) => {
-    const response = await axios.delete(`${url}/${id}`);
-    console.log(response);
-    getIngresos();
-  }
-
-  const postIngresos = async (nuevoIngreso) => {
-    try {
-      const response = await axios.post(url, nuevoIngreso);
-      console.log('Nuevo ingreso creado:', response.data);
-      getIngresos(); // Actualiza la lista después de crear el ingereso
-    } catch (error) {
-      console.error('Error al crear el nuevo ingreso:', error);
-      throw error;
-    }
-  };
-
-  const updateIngresos = async (id, newData) => {
-    try {
-      const response = await axios.put(`${url}/${id}`, newData);
-      console.log(response);
-      getIngresos();
-    } catch (error) {
-      console.error('Error al actualizar el ingreso:', error);
-    }
-  };
 
   //metodos para sweetalert
   const handleConsultaIngresos = async (id) => {
     try {
-      const ingresos = await getIngresosId(id);
+      const ingresos = await apiService.getIngresosId(id);
       Swal.fire({
         title: 'Información del ingreso',
         html: `
@@ -132,10 +74,10 @@ const Ingresos = () => {
 
   const handleModificarIngresos = async (id) => {
     try {
-      await getExpendiente();
-      await getTipoIngreso();
-      await getPeriodoPlanilla();
-      const ingresos = await getIngresosId(id);
+      await apiService.getExpendiente();
+      await apiService.getTipoIngreso();
+      await apiService.getPeriodoPlanilla();
+      const ingresos = await apiService.getIngresosId(id);
       Swal.fire({
         title: 'Modificar Ingreso',
         html: `
@@ -179,7 +121,7 @@ const Ingresos = () => {
 
 
           // Llamar a la función para actualizar el periodo de planilla
-          updateIngresos(ingresos.id, {
+          apiService.updateIngresos(ingresos.id, {
             inn_codppl: codigo_ppl,
             inn_codexp: codigo_exp,
             inn_codtig: codigo_tig,
@@ -187,9 +129,11 @@ const Ingresos = () => {
 
           });
         }
-      }).then((result) => {
+      }).then(async(result) => {
         if (result.isConfirmed) {
           Swal.fire('Actualización confirmada', '', 'success');
+          const dataIngresos = await apiService.getIngresos();
+          setingresos(dataIngresos);          
         }
       });
     } catch (error) {
@@ -214,20 +158,21 @@ const Ingresos = () => {
       cancelButtonColor: '#d33',
       confirmButtonText: 'Sí, eliminar',
       cancelButtonText: 'Cancelar'
-    }).then((result) => {
+    }).then(async(result) => {
       if (result.isConfirmed) {
-        // Aquí puedes agregar la lógica para eliminar la ingresos
-        deleteIngresos(id);
+        await apiService.deleteIngresos(id);
         console.log('ingreso eliminada');
+        const dataIngresos = await apiService.getIngresos();
+        setingresos(dataIngresos);        
       }
     });
   };
 
   const handlePostIngresos = async () => {
     // Espera a que se resuelva la promesa de los tres get
-    await getExpendiente();
-    await getTipoIngreso();
-    await getPeriodoPlanilla();
+    await apiService.getExpendiente();
+    await apiService.getTipoIngreso();
+    await apiService.getPeriodoPlanilla();
 
     // Ahora tipoPlanilla tiene los datos actualizados
     Swal.fire({
@@ -273,13 +218,15 @@ const Ingresos = () => {
 
         // Crear el nuevo ingreso
         try {
-          await postIngresos({
+          await apiService.postIngresos({
             inn_codppl: codigo_ppl,
             inn_codexp: codigo_exp,
             inn_codtig: codigo_tig,
             inn_valor: valor,
           });
           Swal.fire('Creación exitosa', 'El nuevo ingreso ha sido creado.', 'success');
+          const dataIngresos = await apiService.getIngresos();
+          setingresos(dataIngresos);          
         } catch (error) {
           console.error('Error al crear el ingreso:', error);
           Swal.fire('Error', 'No se pudo crear el ingreso.', 'error');

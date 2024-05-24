@@ -35,15 +35,9 @@
       "mar_fecha": "5/5/2024",
       "mar_hora": "07:23:00",
       "mar_estado": "Entrada"
-    },
-    {
-      "id": 7,
-      "mar_fecha": "5/5/2024",
-      "mar_hora": "07:23:07",
-      "mar_estado": "Fin Almuerzo"
     }
   ],
-  "periodos_planilla": [
+  "ppl_periodos_planilla": [
     {
       "ppl_codigo_tpl": "COD003",
       "ppl_codigo_visual": "VIS003",
@@ -65,37 +59,27 @@
       "id": 4
     },
     {
-      "id": 5,
-      "ppl_codigo_tpl": "COD005",
-      "ppl_codigo_visual": "VIS005",
-      "ppl_estado": "Activo",
-      "ppl_fecha_ini": "2024-05-01",
-      "ppl_fecha_fin": "2024-05-15",
-      "ppl_anio": 2024,
-      "ppl_mes": 5
-    },
-    {
-      "id": 6,
-      "ppl_codigo_tpl": "COD006",
-      "ppl_codigo_visual": "VIS006",
-      "ppl_estado": "Inactivo",
-      "ppl_fecha_ini": "2024-06-01",
-      "ppl_fecha_fin": "2024-06-15",
-      "ppl_anio": 2024,
-      "ppl_mes": 6
-    },
-    {
-      "ppl_codigo_tpl": "3",
-      "ppl_codigo_visual": "123",
-      "ppl_estado": "123",
-      "ppl_fecha_ini": "2020-07-07",
-      "ppl_fecha_fin": "2020-08-08",
+      "ppl_codigo_tpl": "1",
+      "ppl_codigo_visual": "test",
+      "ppl_estado": "activo",
+      "ppl_fecha_ini": "2024-05-23",
+      "ppl_fecha_fin": "2024-05-24",
       "ppl_anio": "2024",
-      "ppl_mes": "08",
-      "id": 7
+      "ppl_mes": "05",
+      "id": 5
+    },
+    {
+      "ppl_codigo_tpl": "4",
+      "ppl_codigo_visual": "test2",
+      "ppl_estado": "asdf",
+      "ppl_fecha_ini": "2024-05-23",
+      "ppl_fecha_fin": "2024-05-24",
+      "ppl_anio": "2024",
+      "ppl_mes": "05",
+      "id": 6
     }
   ],
-  "expediente": [
+  "exp_expedientes": [
     {
       "id": 1,
       "exp_codigo": "EXP001",
@@ -115,204 +99,6 @@
       "exp_identificacion": "1234567890",
       "exp_cuenta_banco": "0123456789",
       "exp_fecha_ini": "2023-01-01",
-      "exp_descuenta_renta": true,
-      "exp_decuenta_seguro_social": true
-    },
-    {
-      "id": 2,
-      "exp_codigo": "EXP002",
-      "exp_codtpl": "COD002",
-      "exp_codtpc": "CODTPC002",
-      "exp_codfpa": "CODFPA002",
-      "exp_codjor": "CODJOR002",
-      "exp_codplz": "CODPLZ002",
-      "exp_nombres": "María",
-      "exp_apellidos": "Gómez",
-      "exp_planilla": "Planilla B",
-      "exp_jornada": "Medio tiempo",
-      "exp_forma_pago": "Cheque",
-      "exp_tipo_contrato": "Contrato a término fijo",
-      "exp_sexo": "Femenino",
-      "exp_fecha_nacimiento": "1985-10-20",
-      "exp_identificacion": "0987654321",
-      "exp_cuenta_banco": "9876543210",
-      "exp_fecha_ini": "2023-02-15",
-      "exp_descuenta_renta": false,
-      "exp_decuenta_seguro_social": true
-    },
-    {
-      "id": 3,
-      "exp_codigo": "EXP003",
-      "exp_codtpl": "COD003",
-      "exp_codtpc": "CODTPC003",
-      "exp_codfpa": "CODFPA003",
-      "exp_codjor": "CODJOR003",
-      "exp_codplz": "CODPLZ003",
-      "exp_nombres": "Luis",
-      "exp_apellidos": "Martínez",
-      "exp_planilla": "Planilla C",
-      "exp_jornada": "Jornada parcial",
-      "exp_forma_pago": "Efectivo",
-      "exp_tipo_contrato": "Contrato de prestación de servicios",
-      "exp_sexo": "Masculino",
-      "exp_fecha_nacimiento": "1988-12-10",
-      "exp_identificacion": "2468013579",
-      "exp_cuenta_banco": "1357924680",
-      "exp_fecha_ini": "2023-03-01",
-      "exp_descuenta_renta": false,
-      "exp_decuenta_seguro_social": false
-    },
-    {
-      "id": 4,
-      "exp_codigo": "EXP004",
-      "exp_codtpl": "COD004",
-      "exp_codtpc": "CODTPC004",
-      "exp_codfpa": "CODFPA004",
-      "exp_codjor": "CODJOR004",
-      "exp_codplz": "CODPLZ004",
-      "exp_nombres": "Ana",
-      "exp_apellidos": "López",
-      "exp_planilla": "Planilla A",
-      "exp_jornada": "Jornada completa",
-      "exp_forma_pago": "Transferencia bancaria",
-      "exp_tipo_contrato": "Contrato de aprendizaje",
-      "exp_sexo": "Femenino",
-      "exp_fecha_nacimiento": "1995-07-08",
-      "exp_identificacion": "3579102468",
-      "exp_cuenta_banco": "2468135790",
-      "exp_fecha_ini": "2023-04-15",
-      "exp_descuenta_renta": true,
-      "exp_decuenta_seguro_social": true
-    },
-    {
-      "id": 5,
-      "exp_codigo": "EXP005",
-      "exp_codtpl": "COD005",
-      "exp_codtpc": "CODTPC005",
-      "exp_codfpa": "CODFPA005",
-      "exp_codjor": "CODJOR005",
-      "exp_codplz": "CODPLZ005",
-      "exp_nombres": "Pedro",
-      "exp_apellidos": "Rodríguez",
-      "exp_planilla": "Planilla B",
-      "exp_jornada": "Tiempo parcial",
-      "exp_forma_pago": "Depósito bancario",
-      "exp_tipo_contrato": "Contrato por obra o labor",
-      "exp_sexo": "Masculino",
-      "exp_fecha_nacimiento": "1992-03-25",
-      "exp_identificacion": "8024671359",
-      "exp_cuenta_banco": "8024671359",
-      "exp_fecha_ini": "2023-05-01",
-      "exp_descuenta_renta": false,
-      "exp_decuenta_seguro_social": true
-    },
-    {
-      "id": 6,
-      "exp_codigo": "EXP006",
-      "exp_codtpl": "COD006",
-      "exp_codtpc": "CODTPC006",
-      "exp_codfpa": "CODFPA006",
-      "exp_codjor": "CODJOR006",
-      "exp_codplz": "CODPLZ006",
-      "exp_nombres": "Laura",
-      "exp_apellidos": "Sánchez",
-      "exp_planilla": "Planilla C",
-      "exp_jornada": "Jornada completa",
-      "exp_forma_pago": "Cheque",
-      "exp_tipo_contrato": "Contrato de temporada",
-      "exp_sexo": "Femenino",
-      "exp_fecha_nacimiento": "1993-09-12",
-      "exp_identificacion": "9513578024",
-      "exp_cuenta_banco": "9513578024",
-      "exp_fecha_ini": "2023-06-01",
-      "exp_descuenta_renta": false,
-      "exp_decuenta_seguro_social": true
-    },
-    {
-      "id": 7,
-      "exp_codigo": "EXP007",
-      "exp_codtpl": "COD007",
-      "exp_codtpc": "CODTPC007",
-      "exp_codfpa": "CODFPA007",
-      "exp_codjor": "CODJOR007",
-      "exp_codplz": "CODPLZ007",
-      "exp_nombres": "David",
-      "exp_apellidos": "González",
-      "exp_planilla": "Planilla A",
-      "exp_jornada": "Jornada completa",
-      "exp_forma_pago": "Efectivo",
-      "exp_tipo_contrato": "Contrato a término indefinido",
-      "exp_sexo": "Masculino",
-      "exp_fecha_nacimiento": "1991-11-30",
-      "exp_identificacion": "6541239870",
-      "exp_cuenta_banco": "6541239870",
-      "exp_fecha_ini": "2023-07-15",
-      "exp_descuenta_renta": false,
-      "exp_decuenta_seguro_social": true
-    },
-    {
-      "id": 8,
-      "exp_codigo": "EXP008",
-      "exp_codtpl": "COD008",
-      "exp_codtpc": "CODTPC008",
-      "exp_codfpa": "CODFPA008",
-      "exp_codjor": "CODJOR008",
-      "exp_codplz": "CODPLZ008",
-      "exp_nombres": "Sofía",
-      "exp_apellidos": "Hernández",
-      "exp_planilla": "Planilla B",
-      "exp_jornada": "Jornada completa",
-      "exp_forma_pago": "Transferencia bancaria",
-      "exp_tipo_contrato": "Contrato a término fijo",
-      "exp_sexo": "Femenino",
-      "exp_fecha_nacimiento": "1994-04-18",
-      "exp_identificacion": "1230984567",
-      "exp_cuenta_banco": "1230984567",
-      "exp_fecha_ini": "2023-08-01",
-      "exp_descuenta_renta": true,
-      "exp_decuenta_seguro_social": true
-    },
-    {
-      "id": 9,
-      "exp_codigo": "EXP009",
-      "exp_codtpl": "COD009",
-      "exp_codtpc": "CODTPC009",
-      "exp_codfpa": "CODFPA009",
-      "exp_codjor": "CODJOR009",
-      "exp_codplz": "CODPLZ009",
-      "exp_nombres": "Carolina",
-      "exp_apellidos": "Alvarez",
-      "exp_planilla": "Planilla C",
-      "exp_jornada": "Medio tiempo",
-      "exp_forma_pago": "Depósito bancario",
-      "exp_tipo_contrato": "Contrato de prestación de servicios",
-      "exp_sexo": "Femenino",
-      "exp_fecha_nacimiento": "1990-07-05",
-      "exp_identificacion": "3698521470",
-      "exp_cuenta_banco": "3698521470",
-      "exp_fecha_ini": "2023-09-15",
-      "exp_descuenta_renta": false,
-      "exp_decuenta_seguro_social": false
-    },
-    {
-      "id": 10,
-      "exp_codigo": "EXP010",
-      "exp_codtpl": "COD010",
-      "exp_codtpc": "CODTPC010",
-      "exp_codfpa": "CODFPA010",
-      "exp_codjor": "CODJOR010",
-      "exp_codplz": "CODPLZ010",
-      "exp_nombres": "Daniel",
-      "exp_apellidos": "Ruíz",
-      "exp_planilla": "Planilla A",
-      "exp_jornada": "Jornada completa",
-      "exp_forma_pago": "Cheque",
-      "exp_tipo_contrato": "Contrato de aprendizaje",
-      "exp_sexo": "Masculino",
-      "exp_fecha_nacimiento": "1989-12-20",
-      "exp_identificacion": "7896541230",
-      "exp_cuenta_banco": "7896541230",
-      "exp_fecha_ini": "2023-10-01",
       "exp_descuenta_renta": true,
       "exp_decuenta_seguro_social": true
     }
@@ -355,21 +141,21 @@
       "dss_valor": 75.25
     },
     {
-      "id": 3,
-      "dss_codexp": 3,
-      "dss_codppl": 3,
-      "dss_codtdc": 3,
-      "dss_valor": 50.75
+      "dss_codexp": "3",
+      "dss_codppl": "3",
+      "dss_codtdc": "3",
+      "dss_valor": "12.32",
+      "id": 3
     },
     {
-      "dss_codexp": "4",
-      "dss_codppl": "4",
+      "dss_codexp": "1",
+      "dss_codppl": "3",
       "dss_codtdc": "4",
-      "dss_valor": "999.99",
+      "dss_valor": "11.11",
       "id": 4
     }
   ],
-  "tdc_tipo_descuento": [
+  "tdc_tipos_descuentos": [
     {
       "id": 1,
       "tdc_descripcion": "Descuento por cantidad"
@@ -391,7 +177,7 @@
       "tdc_descripcion": "Descuento por lealtad"
     }
   ],
-  "ingresos": [
+  "inn_ingresos": [
     {
       "id": 1,
       "inn_codppl": 1,
@@ -400,21 +186,14 @@
       "inn_valor": 150.5
     },
     {
-      "id": 2,
-      "inn_codppl": 2,
-      "inn_codexp": 2,
-      "inn_codtig": 2,
-      "inn_valor": 200.75
-    },
-    {
-      "inn_codppl": "5",
-      "inn_codexp": "4",
-      "inn_codtig": "4",
-      "inn_valor": "150.00",
-      "id": 3
+      "inn_codppl": "6",
+      "inn_codexp": "1",
+      "inn_codtig": "2",
+      "inn_valor": "33",
+      "id": 2
     }
   ],
-  "tipo_ingreso": [
+  "tig_tipos_ingreso": [
     {
       "id": 1,
       "tig_descripcion": "Salario",
@@ -470,7 +249,7 @@
     {
       "id": 1,
       "plz_codcco": 1,
-      "plz_nombre": "test1",
+      "plz_nombre": "Programador",
       "plz_maximo_empleados": 50,
       "plz_es_temporal": false,
       "plz_fecha_ini": "2024-06-01",
@@ -479,84 +258,149 @@
     {
       "id": 2,
       "plz_codcco": 2,
-      "plz_nombre": "test2",
-      "plz_maximo_empleados": 30,
-      "plz_es_temporal": true,
-      "plz_fecha_ini": "2024-07-01",
+      "plz_nombre": "Analista",
+      "plz_maximo_empleados": 50,
+      "plz_es_temporal": false,
+      "plz_fecha_ini": "2024-06-01",
       "plz_fecha_fin": "2024-12-31"
     },
     {
-      "plz_codcco": "3",
-      "plz_nombre": "test3",
-      "plz_maximo_empleados": "40",
-      "plz_es_temporal": true,
-      "plz_fecha_ini": "2024-08-01",
-      "plz_fecha_fin": "2024-12-31",
-      "id": 3
-    },
-    {
-      "plz_codcco": "4",
-      "plz_nombre": "test44444",
-      "plz_maximo_empleados": "25555",
-      "plz_es_temporal": "false",
-      "plz_fecha_ini": "2024-09-29",
-      "plz_fecha_fin": "2024-12-29",
-      "id": 4
-    },
-    {
-      "plz_codcco": "undefined",
-      "plz_nombre": "test55",
-      "plz_maximo_empleados": "55",
+      "id": 3,
+      "plz_codcco": 3,
+      "plz_nombre": "Diseñador",
+      "plz_maximo_empleados": 50,
       "plz_es_temporal": false,
-      "plz_fecha_ini": "2024-05-19",
-      "plz_fecha_fin": "2024-05-19",
-      "id": 5
+      "plz_fecha_ini": "2024-06-01",
+      "plz_fecha_fin": "2024-12-31"
     },
     {
-      "plz_codcco": "undefined",
-      "plz_nombre": "test66",
-      "plz_maximo_empleados": "66",
-      "plz_es_temporal": true,
-      "plz_fecha_ini": "2024-05-19",
-      "plz_fecha_fin": "2024-05-19",
-      "id": 6
+      "id": 4,
+      "plz_codcco": 4,
+      "plz_nombre": "Tester",
+      "plz_maximo_empleados": 50,
+      "plz_es_temporal": false,
+      "plz_fecha_ini": "2024-06-01",
+      "plz_fecha_fin": "2024-12-31"
+    },
+    {
+      "id": 5,
+      "plz_codcco": 5,
+      "plz_nombre": "Soporte",
+      "plz_maximo_empleados": 50,
+      "plz_es_temporal": false,
+      "plz_fecha_ini": "2024-06-01",
+      "plz_fecha_fin": "2024-12-31"
     }
+
   ],
   "cco_centro_costos": [
     {
       "id": 1,
       "cco_descripcion": "Administración",
       "cco_cuenta_contable": "1001",
-      "cco_nomeclatura_contable": "ADM",
+      "cco_nomenclatura_contable": "ADM",
       "cco_jor_total_horas": 160
     },
     {
       "id": 2,
       "cco_descripcion": "Producción",
       "cco_cuenta_contable": "2001",
-      "cco_nomeclatura_contable": "PROD",
+      "cco_nomenclatura_contable": "PROD",
       "cco_jor_total_horas": 160
     },
     {
       "id": 3,
       "cco_descripcion": "Ventas",
       "cco_cuenta_contable": "3001",
-      "cco_nomeclatura_contable": "VENT",
+      "cco_nomenclatura_contable": "VENT",
       "cco_jor_total_horas": 160
     },
     {
       "id": 4,
       "cco_descripcion": "Logística",
       "cco_cuenta_contable": "4001",
-      "cco_nomeclatura_contable": "LOG",
+      "cco_nomenclatura_contable": "LOG",
       "cco_jor_total_horas": 160
     },
     {
       "id": 5,
       "cco_descripcion": "Mantenimiento",
       "cco_cuenta_contable": "5001",
-      "cco_nomeclatura_contable": "MANT",
+      "cco_nomenclatura_contable": "MANT",
       "cco_jor_total_horas": 160
+    }
+  ],
+  "fpa_formas_pagos": [
+    {
+      "id": 1,
+      "fpa_descripcion": "Efectivo"
+    },
+    {
+      "id": 2,
+      "fpa_descripcion": "Cheque"
+    }
+  ],
+  "tpc_tipo_contrato": [
+    {
+      "id": 1,
+      "tpc_descripcion": "Contrato a término indefinido"
+    },
+    {
+      "id": 2,
+      "tpc_descripcion": "Contrato a término fijo"
+    },
+    {
+      "id": 3,
+      "tpc_descripcion": "Contrato de prestación de servicios"
+    }
+  ],
+  "jor_jornadas": [
+    {
+      "id": 1,
+      "jor_descripcion": "Jornada completa",
+      "jor_entrada": "07:00:00",
+      "jor_salida": "12:00:00",
+      "jor_total_horas": 5
+    },
+    {
+      "id": 2,
+      "jor_descripcion": "Medio tiempo",
+      "jor_entrada": "07:00:00",
+      "jor_salida": "09:00:00",
+      "jor_total_horas": 2
+    },
+    {
+      "id": 3,
+      "jor_descripcion": "Jornada parcial",
+      "jor_entrada": "07:00:00",
+      "jor_salida": "11:00:00",
+      "jor_total_horas": 4
+    }
+  ],
+  "tma_tipo_marca": [
+    {
+      "id": 1,
+      "tma_descripcion": "Entrada"
+    },
+    {
+      "id": 2,
+      "tma_descripcion": "Inicio Almuerzo"
+    },
+    {
+      "id": 3,
+      "tma_descripcion": "Fin Almuerzo"
+    },
+    {
+      "id": 4,
+      "tma_descripcion": "Inicio Receso"
+    },
+    {
+      "id": 5,
+      "tma_descripcion": "Fin Receso"
+    },
+    {
+      "id": 6,
+      "tma_descripcion": "Salida"
     }
   ]
 }

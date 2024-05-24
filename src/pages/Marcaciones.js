@@ -1,32 +1,33 @@
 import React, { useState, useEffect } from 'react';
 import NavbarComponent from '../components/NavbarComponent'
 import TableComponent from '../components/TableComponent'
-import axios from 'axios'
+import apiService from '../services/services';
 import Swal from 'sweetalert2'
 
 //ESTO UNICAMENTE LO VE EL ADMIN
 const Marcaciones = () => {
-  //declaramos los hooks
-  const url = "  http://localhost:3000/mar_marcas"
   const [marcas, setMarcas] = useState([]);
 
   useEffect(() => {
-    getMarcas();
-  }
-    , []);
+    const fetchData = async () => {
+      try {
+        const dataMarcas = await apiService.getMarcas();
+        setMarcas(dataMarcas);        
 
-  const getMarcas = async () => {
-    const response = await axios.get(url);
-    setMarcas(response.data);
-    // console.log(response.data);
-  }
 
-  const deleteMarca = async (id) => {
-    const response = await axios.delete(`${url}/${id}`);
-    console.log(response);
-    getMarcas();
-  }
+      } catch (error) {
+        console.error('Error al obtener datos:', error);
+        Swal.fire({
+          title: 'Error',
+          text: 'No se pudo obtener la información necesaria.',
+          icon: 'error',
+          confirmButtonText: 'Ok',
+        });
+      }
+    };
 
+    fetchData();
+  }, []);  
 
   // Función para mostrar SweetAlert de confirmación antes de modificar una marca
   const handleModificarMarca = () => {
@@ -58,10 +59,12 @@ const Marcaciones = () => {
       cancelButtonColor: '#d33',
       confirmButtonText: 'Sí, eliminar',
       cancelButtonText: 'Cancelar'
-    }).then((result) => {
+    }).then(async(result) => {
       if (result.isConfirmed) {
         // Aquí puedes agregar la lógica para eliminar la marca
-        deleteMarca(id);
+        await apiService.deleteMarca(id);
+        const dataMarcas = await apiService.getMarcas();
+        setMarcas(dataMarcas);          
         console.log('Marca eliminada');
       }
     });
