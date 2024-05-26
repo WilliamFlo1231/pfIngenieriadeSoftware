@@ -14,7 +14,7 @@ const PeriodoPlanilla = () => {
         const dataPeriodoPlanilla = await apiService.getPeriodoPlanilla();
         setPeriodoPlanilla(dataPeriodoPlanilla);
 
-        const dataTipoPlanilla = await apiService.getTipoPlanilla();
+        const dataTipoPlanilla = await apiService.getTiposPlanilla();
         setTipoPlanilla(dataTipoPlanilla);
       } catch (error) {
         console.error('Error al obtener datos:', error);
@@ -67,7 +67,7 @@ const PeriodoPlanilla = () => {
 
   const handleModificarPeriodoPlanilla = async (id) => {
     try {
-      await apiService.getTipoPlanilla();
+      await apiService.getTiposPlanilla();
       const periodoPlanilla = await apiService.getPeriodoPlanillaId(id);
       Swal.fire({
         title: 'Modificar Periodo Planilla',
@@ -174,7 +174,7 @@ const PeriodoPlanilla = () => {
 
   const handlePostPeriodoPlanilla = async () => {
     // Espera a que se resuelva la promesa de getTipoPlanilla
-    await apiService.getTipoPlanilla();
+    await apiService.getTiposPlanilla();
 
     // Ahora tipoPlanilla tiene los datos actualizados
     Swal.fire({

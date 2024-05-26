@@ -81,48 +81,94 @@
   ],
   "exp_expedientes": [
     {
-      "id": 1,
-      "exp_codigo": "EXP001",
-      "exp_codtpl": "COD001",
-      "exp_codtpc": "CODTPC001",
-      "exp_codfpa": "CODFPA001",
-      "exp_codjor": "CODJOR001",
-      "exp_codplz": "CODPLZ001",
-      "exp_nombres": "Juan",
+      "exp_nombres": "Juan test",
       "exp_apellidos": "Pérez",
-      "exp_planilla": "Planilla A",
-      "exp_jornada": "Jornada completa",
-      "exp_forma_pago": "Depósito bancario",
-      "exp_tipo_contrato": "Contrato a término indefinido",
+      "exp_codtpl": 1,
+      "exp_codjor": 1,
+      "exp_codfpa": 1,
+      "exp_codtpc": 1,
+      "exp_codplz": 1,
       "exp_sexo": "Masculino",
       "exp_fecha_nacimiento": "1990-05-15",
       "exp_identificacion": "1234567890",
       "exp_cuenta_banco": "0123456789",
       "exp_fecha_ini": "2023-01-01",
       "exp_descuenta_renta": true,
-      "exp_decuenta_seguro_social": true
+      "exp_decuenta_seguro_social": true,
+      "id": 1
+    },
+    {
+      "exp_nombres": "carlos adolfo",
+      "exp_apellidos": "sagastume perez",
+      "exp_codtpl": 1,
+      "exp_codjor": 1,
+      "exp_codfpa": 3,
+      "exp_codtpc": 1,
+      "exp_codplz": 1,
+      "exp_sexo": "Masculino",
+      "exp_fecha_nacimiento": "2024-05-24T20:14",
+      "exp_identificacion": "1356324140101",
+      "exp_cuenta_banco": "13213265465",
+      "exp_fecha_ini": "2024-05-24T20:14",
+      "exp_descuenta_renta": true,
+      "exp_decuenta_seguro_social": true,
+      "id": 2
+    },
+    {
+      "exp_nombres": "test adolfo",
+      "exp_apellidos": "perez perez",
+      "exp_codtpl": 1,
+      "exp_codjor": 1,
+      "exp_codfpa": 1,
+      "exp_codtpc": 1,
+      "exp_codplz": 1,
+      "exp_sexo": "Masculino",
+      "exp_fecha_nacimiento": "2002-08-19",
+      "exp_identificacion": "1356324140101",
+      "exp_cuenta_banco": "13213265465",
+      "exp_fecha_ini": "2024-05-24",
+      "exp_descuenta_renta": false,
+      "exp_decuenta_seguro_social": false,
+      "id": 3
+    },
+    {
+      "exp_nombres": "Edgar ",
+      "exp_apellidos": "Rodas",
+      "exp_codtpl": 1,
+      "exp_codjor": 1,
+      "exp_codfpa": 3,
+      "exp_codtpc": 1,
+      "exp_codplz": 1,
+      "exp_sexo": "Femenino",
+      "exp_fecha_nacimiento": "2002-08-19",
+      "exp_identificacion": "1111111111111111",
+      "exp_cuenta_banco": "321321654654",
+      "exp_fecha_ini": "2024-05-26",
+      "exp_descuenta_renta": false,
+      "exp_decuenta_seguro_social": false,
+      "id": 4
     }
   ],
   "tpl_tipo_planilla": [
     {
       "id": 1,
-      "tpl_nombre": "Planilla A"
+      "tpl_nombre": "Planilla Mensual"
     },
     {
       "id": 2,
-      "tpl_nombre": "Planilla B"
+      "tpl_nombre": "Planilla Quincenal"
     },
     {
       "id": 3,
-      "tpl_nombre": "Planilla C"
+      "tpl_nombre": "Planilla Semanal"
     },
     {
       "id": 4,
-      "tpl_nombre": "Planilla D"
+      "tpl_nombre": "Planilla de Bonificaciones"
     },
     {
       "id": 5,
-      "tpl_nombre": "Planilla E"
+      "tpl_nombre": "Planilla de Comisiones"
     }
   ],
   "dss_descuentos": [
@@ -290,8 +336,16 @@
       "plz_es_temporal": false,
       "plz_fecha_ini": "2024-06-01",
       "plz_fecha_fin": "2024-12-31"
+    },
+    {
+      "plz_codcco": "undefined",
+      "plz_nombre": "test",
+      "plz_maximo_empleados": "20",
+      "plz_es_temporal": false,
+      "plz_fecha_ini": "2024-05-26",
+      "plz_fecha_fin": "2025-05-26",
+      "id": 6
     }
-
   ],
   "cco_centro_costos": [
     {
@@ -338,6 +392,18 @@
     {
       "id": 2,
       "fpa_descripcion": "Cheque"
+    },
+    {
+      "id": 3,
+      "fpa_descripcion": "Transferencia"
+    },
+    {
+      "id": 4,
+      "fpa_descripcion": "Tarjeta de crédito"
+    },
+    {
+      "id": 5,
+      "fpa_descripcion": "Tarjeta de débito"
     }
   ],
   "tpc_tipo_contrato": [

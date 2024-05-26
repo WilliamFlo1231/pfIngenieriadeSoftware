@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom'; // Asumiendo que usas react-router-dom para manejar rutas y obtener el ID
 import NavbarComponent from '../components/NavbarComponent';
-import Swal from 'sweetalert2'
+import Swal from 'sweetalert2';
 import apiService from '../services/services';
 
-
-function IngresoExpediente() {
+function ModificarExpediente() {
+  const { id } = useParams(); // Obtener el ID del expediente a modificar desde la URL
+  console.log('ID del expediente:', id);
   const [nombres, setNombres] = useState('');
   const [apellidos, setApellidos] = useState('');
   const [tipoPlanilla, setTipoPlanilla] = useState('');
@@ -27,7 +29,6 @@ function IngresoExpediente() {
   const [tiposPlanilla, setTiposPlanilla] = useState([]);
   const [tipoContratos, setTipoContratos] = useState([]);
 
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -49,7 +50,6 @@ function IngresoExpediente() {
         const dataTipoContratos = await apiService.getTiposContrato();
         setTipoContratos(dataTipoContratos);
 
-
       } catch (error) {
         console.error('Error al obtener datos:', error);
         Swal.fire({
@@ -61,19 +61,43 @@ function IngresoExpediente() {
       }
     };
 
+    const fetchExpediente = async () => {
+      try {
+        const expediente = await apiService.getExpedienteId(id);
+        setNombres(expediente.exp_nombres);
+        setApellidos(expediente.exp_apellidos);
+        setTipoPlanilla(expediente.exp_codtpl);
+        setJornada(expediente.exp_codjor);
+        setFormaPago(expediente.exp_codfpa);
+        setPlaza(expediente.exp_codplz);
+        setTipoContrato(expediente.exp_codtpc);
+        setSexo(expediente.exp_sexo);
+        setFechaNacimiento(expediente.exp_fecha_nacimiento);
+        setIdentificacion(expediente.exp_identificacion);
+        setCuentaBanco(expediente.exp_cuenta_banco);
+        setFechaInicio(expediente.exp_fecha_ini);
+        setDescuentaRenta(expediente.exp_descuenta_renta);
+        setDescuentaSeguroSocial(expediente.exp_decuenta_seguro_social);
+      } catch (error) {
+        console.error('Error al obtener expediente:', error);
+        Swal.fire({
+          title: 'Error',
+          text: 'No se pudo obtener el expediente.',
+          icon: 'error',
+          confirmButtonText: 'Ok',
+        });
+      }
+    };
+
     fetchData();
-  }, []);
+    fetchExpediente();
+  }, [id]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (
       nombres.trim() === '' ||
-      apellidos.trim() === '' ||
-      tipoPlanilla.trim() === '' ||
-      jornada.trim() === '' ||
-      formaPago.trim() === '' ||
-      tipoContrato.trim() === '' ||
-      plaza.trim() === '' ||
+      apellidos.trim() === '' ||  
       sexo.trim() === '' ||
       fechaNacimiento.trim() === '' ||
       identificacion.trim() === '' ||
@@ -89,10 +113,7 @@ function IngresoExpediente() {
       return;
     }
 
-    //+validarFechaNacimiento(fechaNacimiento)
-
-
-    const nuevoExpediente = {
+    const expedienteModificado = {
       exp_nombres: nombres,
       exp_apellidos: apellidos,
       exp_codtpl: parseInt(tipoPlanilla),
@@ -110,82 +131,30 @@ function IngresoExpediente() {
     };
 
     try {
-      await apiService.postExpediente(nuevoExpediente);
+      await apiService.updateExpediente(id, expedienteModificado);
       Swal.fire({
-        title: 'Expediente añadido exitosamente',
+        title: 'Expediente modificado exitosamente',
         icon: 'success',
         confirmButtonColor: '#3085d6',
         confirmButtonText: 'Ok',
       });
-      // Resetea el formulario si es necesario
-      setNombres('');
-      setApellidos('');
-      setTipoPlanilla('');
-      setJornada('');
-      setFormaPago('');
-      setPlaza('');
-      setTipoContrato('');
-      setSexo('');
-      setFechaNacimiento('');
-      setIdentificacion('');
-      setCuentaBanco('');
-      setFechaInicio('');
-      setDescuentaRenta(false);
-      setDescuentaSeguroSocial(false);
+      // Puedes redirigir a otra página si es necesario
     } catch (error) {
       Swal.fire({
         title: 'Error',
-        text: 'No se pudo crear el expediente.',
+        text: 'No se pudo modificar el expediente.',
         icon: 'error',
         confirmButtonColor: '#3085d6',
         confirmButtonText: 'Ok',
       });
     }
-  };
-
-  const validarFechaNacimiento = (fecha) => {
-    const hoy = new Date();
-    console.log(fecha)
-    
-    const fechaNacimiento = new Date(fecha);
-    const edad = hoy.getFullYear() - fechaNacimiento.getFullYear();
-    console.log(edad)
-    /*const mes = hoy.getMonth() - fechaNacimiento.getMonth();
-    if (mes < 0 || (mes === 0 && hoy.getDate() < fechaNacimiento.getDate())) {
-      edad--;
-    }*/
-    if (edad < 18 || edad > 100) {
-      Swal.fire({
-        title: 'Fecha de nacimiento inválida',
-        text: 'La edad debe ser mayor a 18 años y menor a 100 años.',
-        icon: 'error',
-        confirmButtonText: 'Ok',
-      });
-      return false;
-    }
-    return true;
-  };
-
-  // Función para mostrar SweetAlert success de registro
-  const handleConfirmaReg = () => {
-    Swal.fire({
-      title: 'Expediente añadido exitosamente',
-      icon: 'success',
-      confirmButtonColor: '#3085d6',
-      confirmButtonText: 'Ok',
-    }).then((result) => {
-      if (result.isConfirmed) {
-        // Aquí puedes agregar la lógica para eliminar la marca
-        console.log('Marca eliminada');
-      }
-    });
   };
 
   return (
     <div>
       <NavbarComponent />
       <div className="titulo">
-        <h1>Ingreso de Expediente</h1>
+        <h1>Modificar Expediente</h1>
       </div>
       <div className="contenedorPadre mb-5">
         <div className="contenedorHijo">
@@ -263,7 +232,7 @@ function IngresoExpediente() {
                 <select className="form-select" value={sexo} onChange={(e) => setSexo(e.target.value)}>
                   <option value="">Seleccionar...</option>
                   <option value="Masculino">Masculino</option>
-                  <option value="Femenino">Femeninio</option>
+                  <option value="Femenino">Femenino</option>
                 </select>
               </div>
               <div className="col-md-6 mb-3">
@@ -296,7 +265,7 @@ function IngresoExpediente() {
               <label className="form-check-label" htmlFor="descuentaSeguroSocial">Descuenta IGSS</label>
             </div>
             <div className="contenedorPadre">
-              <button type="submit" className="btn btn-primary btn-lg" onClick={() => handleConfirmaReg()}>Guardar Expediente</button>
+              <button type="submit" className="btn btn-primary btn-lg">Guardar Cambios</button>
             </div>
           </form>
         </div>
@@ -305,4 +274,4 @@ function IngresoExpediente() {
   );
 }
 
-export default IngresoExpediente;
+export default ModificarExpediente;

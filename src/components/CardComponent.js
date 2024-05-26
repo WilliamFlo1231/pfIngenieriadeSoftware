@@ -1,11 +1,11 @@
 import React from 'react';
 import { Link } from "react-router-dom";
 
-function CardComponent({ title, iconClass, quantity, tipoTexto,enlace }) {
+function CardComponent({ title, iconClass, quantity, tipoTexto,enlace, tipoBorde }) {
   return (
 
     <div class="col-xl-3 col-md-6 mb-4">
-      <div class="card border-left-success shadow h-100 py-2">
+      <div className={`card ${tipoBorde} shadow h-100 py-2`}>
         <Link to={enlace} style={{textDecoration: "none"}}>
           <div class="card-body">
             <div class="row no-gutters align-items-center">

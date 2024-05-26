@@ -8,24 +8,24 @@ import apiService from '../services/services';
 
 
 function Dashboard() {
-  const [expedientes, setExpedientes] = useState([]);  
+  const [expedientes, setExpedientes] = useState([]);
   const [totalExpedientes, setTotalExpedientes] = useState(0); // Estado para almacenar el total de expedientes
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const dataExpedientes = await apiService.getExpedientes();
-        setExpedientes(dataExpedientes);        
+        setExpedientes(dataExpedientes);
         // Contar el total de expedientes
         const total = dataExpedientes.length;
-        setTotalExpedientes(total);        
+        setTotalExpedientes(total);
       } catch (error) {
-        console.error('Error al obtener datos:', error);    
+        console.error('Error al obtener datos:', error);
       }
     };
-  
+
     fetchData();
-  }, []);    
+  }, []);
 
 
   return (
@@ -48,44 +48,30 @@ function Dashboard() {
             quantity={totalExpedientes}
             enlace={"/ConsultaExpedientes"}
             tipoTexto={"text-success"}
+            tipoBorde={"border-left-success"}
           />
           <CardComponent
-            title="Ganancias"
+            title="Vacaciones pendientes de autorizar"
             iconClass="fas fa-dollar-sign"
             quantity={"Q215,000"}
-            tipoTexto={"text-success"}
+            tipoTexto={"text-info"}
+            tipoBorde={"border-left-info"}
           />
 
-          <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card border-left-info shadow h-100 py-2">
-              <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                  <div class="col mr-2">
-                    <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Tasks
-                    </div>
-                    <div class="row no-gutters align-items-center">
-                      <div class="col-auto">
-                        <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">50%</div>
-                      </div>
-                      <div class="col">
-                        <div class="progress progress-sm mr-2">
-                          <div class="progress-bar bg-info" role="progressbar" style={{ width: "50%" }} aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-auto">
-                    <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          <CardComponent
+            title="Horas extras pendientes de autorizar"
+            iconClass="fas fa-dollar-sign"
+            quantity={"5"}
+            tipoTexto={"text-primary"}
+            tipoBorde={"border-left-primary"}
+          />
+
           <CardComponent
             title="Pendiente"
             iconClass="fas fa-comments"
             quantity={"18"}
             tipoTexto={"text-warning"}
+            tipoBorde={"border-left-warning"}
           />
 
         </div>

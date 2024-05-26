@@ -42,7 +42,6 @@ const Plazas = () => {
             <p><strong>ID:</strong> ${plazas.id}</p>
             <p><strong>Código CCO :</strong> ${plazas.plz_codcco}</p>
             <p><strong>Nombre :</strong> ${plazas.plz_nombre}</p>
-            <p><strong>Maximo empleados :</strong> ${plazas.plz_maximo_empleados}</p>
             <p><strong>Es temporal:</strong> ${plazas.plz_es_temporal}</p>
             <p><strong>Fecha Inicio :</strong> ${plazas.plz_fecha_ini}</p>
             <p><strong>Fecha Fin :</strong> ${plazas.plz_fecha_fin}</p>
@@ -83,10 +82,6 @@ const Plazas = () => {
             <br/>
             <input type="text" id="plz_nombre" class="swal2-input" placeholder="Ingrese el nombre" value="${plazas.plz_nombre}">
             <br/>
-            <label for="plz_maximo_empleados">maximo de empleados:</label>
-            <br/>
-            <input type="number" id="plz_maximo_empleados" class="swal2-input" placeholder="Ingrese el numero maximo de empleados" value="${plazas.plz_maximo_empleados}">
-            <br/>
             <label for="plz_es_temporal">Plaza tempor al:</label>
             <br/>
             <select id="plz_es_temporal" class="swal2-select">
@@ -114,7 +109,6 @@ const Plazas = () => {
           // Obtener los valores de los inputs
           const plz_codcco = Swal.getPopup().querySelector('#plz_codcco').value;
           const plz_nombre = Swal.getPopup().querySelector('#plz_nombre').value;
-          const plz_maximo_empleados = Swal.getPopup().querySelector('#plz_maximo_empleados').value;
           const plz_es_temporal = Swal.getPopup().querySelector('#plz_es_temporal').value;
           const plz_fecha_ini = Swal.getPopup().querySelector('#plz_fecha_ini').value;
           const plz_fecha_fin = Swal.getPopup().querySelector('#plz_fecha_fin').value;
@@ -123,7 +117,6 @@ const Plazas = () => {
           apiService.updatePlazas(plazas.id, {
             plz_codcco: plz_codcco,
             plz_nombre: plz_nombre,
-            plz_maximo_empleados: plz_maximo_empleados,
             plz_es_temporal: plz_es_temporal,
             plz_fecha_ini: plz_fecha_ini,
             plz_fecha_fin: plz_fecha_fin,
@@ -189,10 +182,6 @@ const Plazas = () => {
       <br/>
       <input type="text" id="plz_nombre" class="swal2-input" placeholder="Ingrese el nombre">
       <br/>
-      <label for="plz_maximo_empleados">maximo de empleados:</label>
-      <br/>
-      <input type="number" id="plz_maximo_empleados" class="swal2-input" placeholder="Ingrese el numero maximo de empleados" value="${plazas.plz_maximo_empleados}">
-      <br/>
       <label for="plz_es_temporal">Plaza temporal:</label>
       <br/>
       <select id="plz_es_temporal" class="swal2-select">
@@ -220,7 +209,6 @@ const Plazas = () => {
         // Obtener los valores de los inputs
         const plz_codcco = Swal.getPopup().querySelector('#plz_codcco').value;
         const plz_nombre = Swal.getPopup().querySelector('#plz_nombre').value;
-        const plz_maximo_empleados = Swal.getPopup().querySelector('#plz_maximo_empleados').value;
         const plz_es_temporal = Swal.getPopup().querySelector('#plz_es_temporal').value;
         const plz_fecha_ini = Swal.getPopup().querySelector('#plz_fecha_ini').value;
         const plz_fecha_fin = Swal.getPopup().querySelector('#plz_fecha_fin').value;
@@ -230,7 +218,6 @@ const Plazas = () => {
           await apiService.postPlazas({
             plz_codcco: plz_codcco,
             plz_nombre: plz_nombre,
-            plz_maximo_empleados: plz_maximo_empleados,
             plz_es_temporal: isTrueSet,
             plz_fecha_ini: plz_fecha_ini,
             plz_fecha_fin: plz_fecha_fin,
@@ -267,11 +254,6 @@ const Plazas = () => {
     {
       name: 'Nombre',
       selector: row => row.plz_nombre,
-      sortable: true,
-    },
-    {
-      name: 'Maximo de empleados',
-      selector: row => row.plz_maximo_empleados,
       sortable: true,
     },
     {

@@ -16,9 +16,9 @@ const NavbarComponent = () => {
                 Expedientes <i class="fa-solid fa-person"></i>
               </a>
               <ul class="dropdown-menu">
-                <li><Link class="dropdown-item" to={"/ConsultaExpedientes"}>Consulta de Expediente</Link></li>
-                <li><Link class="dropdown-item" to={"/IngresoExpediente"}>Ingreso de Expediente</Link></li>
-                <li><Link class="dropdown-item" to={"/ConsultaExpedientes"}>Modificacion de expediente</Link></li>
+                <li><Link class="dropdown-item" to={"/ConsultaExpedientes"}><i class="fa-solid fa-magnifying-glass"></i> Consulta de Expediente</Link></li>
+                <li><Link class="dropdown-item" to={"/IngresoExpediente"}><i class="fa-solid fa-plus"></i> Ingreso de Expediente</Link></li>
+                <li><Link class="dropdown-item" to={"/ConsultaExpedientes"}><i class="fa-solid fa-pencil"></i> Modificacion de expediente</Link></li>
                 <li><Link class="dropdown-item" to={"/Marcaciones"}>Marcaciones</Link></li>
                 <li><Link class="dropdown-item" to={"/Plazas"}>Plazas</Link></li>
               </ul>

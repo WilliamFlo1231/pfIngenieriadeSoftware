@@ -15,6 +15,8 @@ import Ingresos from './pages/Ingresos';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import Plazas from './pages/Plazas';
+import ModificarExpediente from './pages/ModificarExpediente';
+import DashboardEmpleado from './pages/DashboardEmpleado';
 
 function App() {
   return (
@@ -32,11 +34,14 @@ function App() {
             <Route path="/SolicitudVacaciones" element={<SolicitudVacaciones/>} />
             <Route path="/ConsultaPeriodoPlanilla" element={<PeriodoPlanilla/>} />
             <Route path="/ConsultaExpedientes" element={<ConsultaExpedientes/>} />
+            <Route path="/ModificarExpediente/:id" element={<ModificarExpediente/>} />
             <Route path="/ConsultaDescuentos" element={<Descuentos/>} />
             <Route path="/ConsultaIngresos" element={<Ingresos/>} />
             <Route path="/Login" element={<Login/>} />
             <Route path="/Dashboard" element={<Dashboard/>} />
             <Route path="/Plazas" element={<Plazas/>} />
+            <Route path="/DashboardEmpleado" element={<DashboardEmpleado/>} />
+
 
           </Routes>
         </Router>

@@ -9,6 +9,9 @@ const urlEXP = 'http://localhost:3000/exp_expedientes';
 const urlDSS = 'http://localhost:3000/dss_descuentos';
 const urlTDC = 'http://localhost:3000/tdc_tipos_descuentos';
 const urlMAR = 'http://localhost:3000/mar_marcas';
+const urlJRN = 'http://localhost:3000/jor_jornadas';
+const urlFPA = 'http://localhost:3000/fpa_formas_pagos';
+const urlTPC = 'http://localhost:3000/tpc_tipo_contrato';
 
 const apiService = {
 
@@ -149,6 +152,16 @@ const apiService = {
 
   ////////////////////////// EXPEDIENTE //////////////////////////
 
+  getExpedienteId: async (id) => {
+    try {
+      const response = await axios.get(`${urlEXP}/${id}`);
+      return response.data;
+    } catch (error) {
+      console.error('Error al consultar la plaza por ID:', error);
+      throw error;
+    }
+  },
+
   getExpedientes: async () => {
     try {
       const response = await axios.get(urlEXP);
@@ -167,6 +180,27 @@ const apiService = {
     }
   },
 
+  postExpediente: async (nuevoExpediente) => {
+    try {
+      const response = await axios.post(urlEXP, nuevoExpediente);
+      console.log('Nuevo expediente creado:', response.data);
+    } catch (error) {
+      console.error('Error al crear el nuevo expediente:', error);
+      throw error;
+    }
+  },
+
+  updateExpediente: async (codigo, newData) => {
+    try {
+      const response = await axios.put(`${urlEXP}/${codigo}`, newData);
+      console.log(response);
+    } catch (error) {
+      console.error('Error al actualizar el expediente:', error);
+    }
+  },
+
+
+
   ////////////////////////// PLAZAS //////////////////////////
 
   getPlazas: async () => {
@@ -179,7 +213,7 @@ const apiService = {
     }
   },
 
-  getPlazasId: async (id) => {
+  getPlazaId: async (id) => {
     try {
       const response = await axios.get(`${urlPLZ}/${id}`);
       return response.data;
@@ -224,7 +258,7 @@ const apiService = {
   deleteMarca: async (id) => {
     const response = await axios.delete(`${urlMAR}/${id}`);
     console.log(response);
-  },  
+  },
 
   ////////////////////////// CENTRO DE COSTOS //////////////////////////
 
@@ -240,12 +274,22 @@ const apiService = {
 
   ////////////////////////// TIPO DE PLANILLA //////////////////////////
 
-  getTipoPlanilla: async () => {
+  getTiposPlanilla: async () => {
     try {
       const response = await axios.get(urlTPL);
       return response.data;
     } catch (error) {
       console.error('Error al realizar la consulta:', error);
+    }
+  },
+
+  getTipoPlanillaId: async (id) => {
+    try {
+      const response = await axios.get(`${urlTPL}/${id}`);
+      return response.data;
+    } catch (error) {
+      console.error('Error al consultar el tipo de planilla por ID:', error);
+      throw error;
     }
   },
 
@@ -267,7 +311,69 @@ const apiService = {
     } catch (error) {
       console.error('Error al realizar la consulta:', error);
     }
-  }
+  },
+
+  ////////////////////////// JORNADAS //////////////////////////
+  getJornadas: async () => {
+    try {
+      const response = await axios.get(urlJRN);
+      return response.data;
+    } catch (error) {
+      console.error('Error al realizar la consulta:', error);
+    }
+  },
+
+  getJornadaId: async (id) => {
+    try {
+      const response = await axios.get(`${urlJRN}/${id}`);
+      return response.data;
+    } catch (error) {
+      console.error('Error al consultar la jornada por ID:', error);
+      throw error;
+    }
+  },
+
+  ////////////////////////// FORMAS DE PAGO //////////////////////////
+
+  getFormasPago: async () => {
+    try {
+      const response = await axios.get(urlFPA);
+      return response.data;
+    } catch (error) {
+      console.error('Error al realizar la consulta:', error);
+    }
+  },
+
+  getFormaPagoId: async (id) => {
+    try {
+      const response = await axios.get(`${urlFPA}/${id}`);
+      return response.data;
+    } catch (error) {
+      console.error('Error al consultar la forma de pago por ID:', error);
+      throw error;
+    }
+  },
+
+  ////////////////////////// TIPOS DE CONTRATO //////////////////////////
+
+  getTiposContrato: async () => {
+    try {
+      const response = await axios.get(urlTPC);
+      return response.data;
+    } catch (error) {
+      console.error('Error al realizar la consulta:', error);
+    }
+  },
+
+  getTipoContratoId: async (id) => {
+    try {
+      const response = await axios.get(`${urlTPC}/${id}`);
+      return response.data;
+    } catch (error) {
+      console.error('Error al consultar el tipo de contrato por ID:', error);
+      throw error;
+    }
+  },
 
 };
 

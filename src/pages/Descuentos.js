@@ -17,7 +17,7 @@ const Descuentos = () => {
         const dataDescuentos = await apiService.getDescuentos();
         setdescuentos(dataDescuentos);
 
-        const dataExpediente = await apiService.getExpediente();
+        const dataExpediente = await apiService.getExpedientes();
         setExpediente(dataExpediente);
 
         const dataPeriodoPlanilla = await apiService.getPeriodoPlanilla();
@@ -73,7 +73,7 @@ const Descuentos = () => {
 
   const handleModificarDescuentos = async (id) => {
     try {
-      await apiService.getExpediente();
+      await apiService.getExpedientes();
       await apiService.getPeriodoPlanilla();
       await apiService.getTipoDescuento();
       const descuentos = await apiService.getDescuentosId(id);
@@ -169,7 +169,7 @@ const Descuentos = () => {
 
   const handlePostdescuentos = async () => {
     // Espera a que se resuelva la promesa de getTipoPlanilla
-    await apiService.getExpediente();
+    await apiService.getExpedientes();
     await apiService.getPeriodoPlanilla();
     await apiService.getTipoDescuento()
 
