@@ -10,15 +10,22 @@ import apiService from '../services/services';
 function Dashboard() {
   const [expedientes, setExpedientes] = useState([]);
   const [totalExpedientes, setTotalExpedientes] = useState(0); // Estado para almacenar el total de expedientes
+  const [plazas, setPlazas] = useState([]);
+  const [totalPlazas, setTotalPlazas] = useState(0); // Estado para almacenar el total de plazas
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const dataExpedientes = await apiService.getExpedientes();
         setExpedientes(dataExpedientes);
+        const dataPlazas = await apiService.getPlazas();
+        setPlazas(dataPlazas);
         // Contar el total de expedientes
         const total = dataExpedientes.length;
         setTotalExpedientes(total);
+        // Contar el total de plazas
+        const totalPlazas = dataPlazas.length;
+        setTotalPlazas(totalPlazas);
       } catch (error) {
         console.error('Error al obtener datos:', error);
       }
@@ -49,12 +56,13 @@ function Dashboard() {
             enlace={"/ConsultaExpedientes"}
             tipoTexto={"text-success"}
             tipoBorde={"border-left-success"}
-          />
+            />
           <CardComponent
             title="Vacaciones pendientes de autorizar"
             iconClass="fas fa-dollar-sign"
-            quantity={"Q215,000"}
+            quantity={"5"}
             tipoTexto={"text-info"}
+            enlace={"/ConsultaSolicitudVacaciones"}
             tipoBorde={"border-left-info"}
           />
 
@@ -67,11 +75,12 @@ function Dashboard() {
           />
 
           <CardComponent
-            title="Pendiente"
+            title="Plazas totales"
             iconClass="fas fa-comments"
-            quantity={"18"}
+            quantity={totalPlazas}
             tipoTexto={"text-warning"}
             tipoBorde={"border-left-warning"}
+            enlace={"/Plazas"}
           />
 
         </div>

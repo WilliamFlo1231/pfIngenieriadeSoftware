@@ -7,12 +7,16 @@ import Swal from 'sweetalert2'
 //ESTO UNICAMENTE LO VE EL ADMIN
 const Marcaciones = () => {
   const [marcas, setMarcas] = useState([]);
+  const [expedientes, setExpedientes] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const dataMarcas = await apiService.getMarcas();
-        setMarcas(dataMarcas);        
+        setMarcas(dataMarcas);
+
+        const dataExpedientes = await apiService.getExpedientes();
+        setExpedientes(dataExpedientes);
 
 
       } catch (error) {
@@ -27,7 +31,45 @@ const Marcaciones = () => {
     };
 
     fetchData();
-  }, []);  
+  }, []);
+
+  const handleConsultaMarcaciones = async (id) => {
+      try {
+        const marcacion = await apiService.getMarcaId(id);
+        const descEXP = getExpedienteNombres(marcacion.mar_codexp)
+        Swal.fire({
+          title: 'Información de la Marcación',
+          html: `
+            <div style="text-align: left;">
+              <p><strong>ID:</strong> ${marcacion.id}</p>
+              <p><strong>Nombre Expediente:</strong> ${descEXP}</p>
+              <p><strong>Fecha marcacion:</strong> ${marcacion.mar_fecha}</p>
+              <p><strong>Hora Marcacion:</strong> ${marcacion.mar_hora}</p>
+              <p><strong>Estado:</strong> ${marcacion.mar_estado}</p>
+            </div>
+          `,
+          icon: 'info',
+          confirmButtonColor: '#3085d6',
+          confirmButtonText: 'Ok',
+        });
+  
+      } catch (error) {
+        console.error('Error al consultar el Descuento:', error);
+        Swal.fire({
+          title: 'Error',
+          text: 'No se pudo encontrar el Descuento con el ID proporcionado',
+          icon: 'error',
+          confirmButtonColor: '#3085d6',
+          confirmButtonText: 'Ok',
+        });
+      }
+    };
+
+    const getExpedienteNombres = (codExp) => {
+      const expediente = expedientes.find(e => e.id === codExp);
+      return expediente ? expediente.exp_nombres : 'Desconocido';
+    };
+
 
   // Función para mostrar SweetAlert de confirmación antes de modificar una marca
   const handleModificarMarca = () => {
@@ -59,12 +101,12 @@ const Marcaciones = () => {
       cancelButtonColor: '#d33',
       confirmButtonText: 'Sí, eliminar',
       cancelButtonText: 'Cancelar'
-    }).then(async(result) => {
+    }).then(async (result) => {
       if (result.isConfirmed) {
         // Aquí puedes agregar la lógica para eliminar la marca
         await apiService.deleteMarca(id);
         const dataMarcas = await apiService.getMarcas();
-        setMarcas(dataMarcas);          
+        setMarcas(dataMarcas);
         console.log('Marca eliminada');
       }
     });
@@ -72,7 +114,8 @@ const Marcaciones = () => {
 
   const accionesBotones = (row) => (
     <div className="opcionesBTN">
-      <button type="button" className="btn btn-outline-primary custom-tooltip" data-toggle="tooltip" data-placement="top" title="Tooltip on top" onClick={handleModificarMarca}><i class="fa-solid fa-pen"></i></button>
+      <button type="button" className="btn btn-outline-warning" onClick={() => handleConsultaMarcaciones(row.id)}><i className="fa-solid fa-info"></i></button>
+      
       <button type="button" className="btn btn-outline-danger" onClick={() => handleEliminarMarca(row.id)}><i class="fa-solid fa-trash"></i></button>
     </div>
   );
@@ -81,6 +124,11 @@ const Marcaciones = () => {
     {
       name: 'ID',
       selector: row => row.id,
+      sortable: true,
+    },
+    {
+      name: 'Expediente',
+      selector: row => getExpedienteNombres(row.mar_codexp),
       sortable: true,
     },
     {

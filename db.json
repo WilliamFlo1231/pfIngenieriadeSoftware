@@ -2,46 +2,17 @@
   "mar_marcas": [
     {
       "id": 1,
-      "mar_fecha": "5/5/2024",
-      "mar_hora": "07:18:29",
-      "mar_estado": "Entrada"
-    },
-    {
-      "id": 2,
-      "mar_fecha": "5/5/2024",
-      "mar_hora": "07:18:30",
-      "mar_estado": "Inicio Almuerzo"
-    },
-    {
-      "id": 3,
-      "mar_fecha": "5/5/2024",
-      "mar_hora": "07:18:31",
-      "mar_estado": "Fin Almuerzo"
-    },
-    {
-      "id": 4,
-      "mar_fecha": "5/5/2024",
-      "mar_hora": "07:18:31",
-      "mar_estado": "Inicio Receso"
-    },
-    {
-      "id": 5,
-      "mar_fecha": "5/5/2024",
-      "mar_hora": "07:18:32",
-      "mar_estado": "Fin Receso"
-    },
-    {
-      "id": 6,
-      "mar_fecha": "5/5/2024",
-      "mar_hora": "07:23:00",
+      "mar_codexp": 1,
+      "mar_fecha": "26/5/2024",
+      "mar_hora": "10:15:44",
       "mar_estado": "Entrada"
     }
   ],
   "ppl_periodos_planilla": [
     {
-      "ppl_codigo_tpl": "COD003",
+      "ppl_codigo_tpl": 1,
       "ppl_codigo_visual": "VIS003",
-      "ppl_estado": "Inactivo",
+      "ppl_estado": "activo",
       "ppl_fecha_ini": "2024-03-01",
       "ppl_fecha_fin": "2024-03-15",
       "ppl_anio": "2023",
@@ -49,9 +20,9 @@
       "id": 3
     },
     {
-      "ppl_codigo_tpl": "COD004",
+      "ppl_codigo_tpl": 1,
       "ppl_codigo_visual": "VIS004",
-      "ppl_estado": "Activo",
+      "ppl_estado": "inactivo",
       "ppl_fecha_ini": "2024-04-01",
       "ppl_fecha_fin": "2024-04-15",
       "ppl_anio": "2024",
@@ -59,7 +30,7 @@
       "id": 4
     },
     {
-      "ppl_codigo_tpl": "1",
+      "ppl_codigo_tpl": 1,
       "ppl_codigo_visual": "test",
       "ppl_estado": "activo",
       "ppl_fecha_ini": "2024-05-23",
@@ -67,21 +38,11 @@
       "ppl_anio": "2024",
       "ppl_mes": "05",
       "id": 5
-    },
-    {
-      "ppl_codigo_tpl": "4",
-      "ppl_codigo_visual": "test2",
-      "ppl_estado": "asdf",
-      "ppl_fecha_ini": "2024-05-23",
-      "ppl_fecha_fin": "2024-05-24",
-      "ppl_anio": "2024",
-      "ppl_mes": "05",
-      "id": 6
     }
   ],
   "exp_expedientes": [
     {
-      "exp_nombres": "Juan test",
+      "exp_nombres": "Juan carlos",
       "exp_apellidos": "Pérez",
       "exp_codtpl": 1,
       "exp_codjor": 1,
@@ -130,23 +91,6 @@
       "exp_descuenta_renta": false,
       "exp_decuenta_seguro_social": false,
       "id": 3
-    },
-    {
-      "exp_nombres": "Edgar ",
-      "exp_apellidos": "Rodas",
-      "exp_codtpl": 1,
-      "exp_codjor": 1,
-      "exp_codfpa": 3,
-      "exp_codtpc": 1,
-      "exp_codplz": 1,
-      "exp_sexo": "Femenino",
-      "exp_fecha_nacimiento": "2002-08-19",
-      "exp_identificacion": "1111111111111111",
-      "exp_cuenta_banco": "321321654654",
-      "exp_fecha_ini": "2024-05-26",
-      "exp_descuenta_renta": false,
-      "exp_decuenta_seguro_social": false,
-      "id": 4
     }
   ],
   "tpl_tipo_planilla": [
@@ -173,31 +117,31 @@
   ],
   "dss_descuentos": [
     {
-      "id": 1,
       "dss_codexp": 1,
-      "dss_codppl": 1,
+      "dss_codppl": 6,
+      "dss_codtdc": 3,
+      "dss_valor": "99.99",
+      "id": 1
+    },
+    {
+      "dss_codexp": 1,
+      "dss_codppl": 3,
+      "dss_codtdc": 5,
+      "dss_valor": "15.25",
+      "id": 2
+    },
+    {
+      "dss_codexp": 1,
+      "dss_codppl": 3,
       "dss_codtdc": 1,
-      "dss_valor": 100.5
-    },
-    {
-      "id": 2,
-      "dss_codexp": 2,
-      "dss_codppl": 2,
-      "dss_codtdc": 2,
-      "dss_valor": 75.25
-    },
-    {
-      "dss_codexp": "3",
-      "dss_codppl": "3",
-      "dss_codtdc": "3",
-      "dss_valor": "12.32",
+      "dss_valor": "95.95",
       "id": 3
     },
     {
-      "dss_codexp": "1",
-      "dss_codppl": "3",
-      "dss_codtdc": "4",
-      "dss_valor": "11.11",
+      "dss_codexp": 3,
+      "dss_codppl": 3,
+      "dss_codtdc": 1,
+      "dss_valor": "25",
       "id": 4
     }
   ],
@@ -225,17 +169,17 @@
   ],
   "inn_ingresos": [
     {
-      "id": 1,
-      "inn_codppl": 1,
+      "inn_codppl": 5,
       "inn_codexp": 1,
       "inn_codtig": 1,
-      "inn_valor": 150.5
+      "inn_valor": "150.5",
+      "id": 1
     },
     {
-      "inn_codppl": "6",
-      "inn_codexp": "1",
-      "inn_codtig": "2",
-      "inn_valor": "33",
+      "inn_codppl": 5,
+      "inn_codexp": 2,
+      "inn_codtig": 10,
+      "inn_valor": "10.10",
       "id": 2
     }
   ],
@@ -302,13 +246,12 @@
       "plz_fecha_fin": "2024-12-31"
     },
     {
-      "id": 2,
-      "plz_codcco": 2,
-      "plz_nombre": "Analista",
-      "plz_maximo_empleados": 50,
-      "plz_es_temporal": false,
+      "plz_codcco": "2",
+      "plz_nombre": "QA",
+      "plz_es_temporal": "false",
       "plz_fecha_ini": "2024-06-01",
-      "plz_fecha_fin": "2024-12-31"
+      "plz_fecha_fin": "2024-12-31",
+      "id": 2
     },
     {
       "id": 3,
@@ -329,21 +272,19 @@
       "plz_fecha_fin": "2024-12-31"
     },
     {
-      "id": 5,
-      "plz_codcco": 5,
+      "plz_codcco": "5",
       "plz_nombre": "Soporte",
-      "plz_maximo_empleados": 50,
-      "plz_es_temporal": false,
+      "plz_es_temporal": "Verdadero",
       "plz_fecha_ini": "2024-06-01",
-      "plz_fecha_fin": "2024-12-31"
+      "plz_fecha_fin": "2024-12-31",
+      "id": 5
     },
     {
       "plz_codcco": "undefined",
-      "plz_nombre": "test",
-      "plz_maximo_empleados": "20",
+      "plz_nombre": "Tester",
       "plz_es_temporal": false,
       "plz_fecha_ini": "2024-05-26",
-      "plz_fecha_fin": "2025-05-26",
+      "plz_fecha_fin": "2024-05-26",
       "id": 6
     }
   ],
@@ -467,6 +408,30 @@
     {
       "id": 6,
       "tma_descripcion": "Salida"
+    }
+  ],
+  "sdv_solicitudes_vacaciones": [
+    {
+      "sdv_codexp": 1,
+      "sdv_fecha_solicitud": "2024-05-26",
+      "sdv_desde": "2024-05-26",
+      "sdv_hasta": "2024-05-29",
+      "sdv_dias": 3,
+      "sdv_estado": "Aprobado",
+      "id": 1
+    },
+    {
+      "sdv_codexp": 1,
+      "sdv_fecha_solicitud": "2024-05-26",
+      "sdv_desde": "2024-05-27",
+      "sdv_hasta": "2024-05-28",
+      "sdv_dias": 1,
+      "sdv_estado": "Autorizado",
+      "id": 2
+    },
+    {
+      "sdv_estado": "Rechazado",
+      "id": 3
     }
   ]
 }

@@ -34,13 +34,13 @@ const Plazas = () => {
   //metodos para sweetalert
   const handleConsultaPlazas = async (id) => {
     try {
-      const plazas = await apiService.getPlazasId(id);
+      const plazas = await apiService.getPlazaId(id);
       Swal.fire({
         title: 'Información de plazas',
         html: `
           <div style="text-align: left;">
             <p><strong>ID:</strong> ${plazas.id}</p>
-            <p><strong>Código CCO :</strong> ${plazas.plz_codcco}</p>
+            <p><strong>Centro de costos :</strong> ${plazas.plz_codcco}</p>
             <p><strong>Nombre :</strong> ${plazas.plz_nombre}</p>
             <p><strong>Es temporal:</strong> ${plazas.plz_es_temporal}</p>
             <p><strong>Fecha Inicio :</strong> ${plazas.plz_fecha_ini}</p>
@@ -67,15 +67,15 @@ const Plazas = () => {
   const handleModificarPlazas = async (id) => {
     try {
       await apiService.getCentroDeCosto();
-      const plazas = await apiService.getPlazasId(id);
+      const plazas = await apiService.getPlazaId(id);
       Swal.fire({
         title: 'Modificar Plaza',
         html: `
           <div style="text-align: left;">
-            <label for="plz_codcco">Código CCO:</label>
+            <label for="plz_codcco">Centro de costos:</label>
             <br/>
             <select id="plz_codcco" class="swal2-select">
-            ${centroDeCosto.map(option => `<option value="${plazas.plz_codcco}">${option.cco_descripcion}</option>`).join('')}
+            ${centroDeCosto.map(option => `<option value="${option.id}" ${option.id === plazas.plz_codcco ? 'selected' : ''}>${option.cco_descripcion}</option>`).join('')}
           </select>
             <br/>
             <label for="plz_nombre">Nombre:</label>
@@ -84,10 +84,10 @@ const Plazas = () => {
             <br/>
             <label for="plz_es_temporal">Plaza tempor al:</label>
             <br/>
-            <select id="plz_es_temporal" class="swal2-select">
-            <option value="true" ${plazas.plz_es_temporal === true ? 'selected' : ''}>Verdadero</option>
-            <option value="false" ${plazas.plz_es_temporal === false ? 'selected' : ''}>Falso</option>
-          </select>
+          <select id="plz_es_temporal" class="swal2-select">
+          <option value="Verdadero" ${plazas.plz_es_temporal === 'Verdadero' ? 'selected' : ''}>Verdadero</option>
+          <option value="inactivo" ${plazas.plz_es_temporal === 'Falso' ? 'selected' : ''}>Falso</option> 
+        </select>          
             <br/>
             <label for="plz_fecha_ini">Fecha inicio:</label>
             <br/>
@@ -172,7 +172,7 @@ const Plazas = () => {
       title: 'Crear Nueva Plaza',
       html: `
       <div style="text-align: left;">
-      <label for="plz_codcco">Código CCO:</label>
+      <label for="plz_codcco">Centro de costos:</label>
       <br/>
       <select id="plz_codcco" class="swal2-select">
       ${centroDeCosto.map(option => `<option value="${plazas.plz_codcco}">${option.cco_descripcion}</option>`).join('')}
@@ -279,7 +279,7 @@ const Plazas = () => {
       <div class="alineaDerecha ">
         <div className="alineaDerecha">
           <button type="button" className="btn btn-outline-success " onClick={() => handlePostPlazas()}>
-            <i className="fa-solid fa-plus"></i> Crear Ingreso
+            <i className="fa-solid fa-plus"></i> Crear Plaza
           </button>
         </div>
       </div>

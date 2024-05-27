@@ -3,6 +3,7 @@ import NavbarComponent from '../components/NavbarComponent';
 import Reloj from '../components/Reloj';
 import TableComponent from '../components/TableComponent';
 import axios from 'axios'
+import NavbarEmpleadoComponent from '../components/NavbarEmpleadoComponent';
 
 
 const RegistroBotones = ({ onRegistro }) => {
@@ -103,7 +104,7 @@ const Marcacion = () => {
   
   return (
     <div>
-      <NavbarComponent />
+      <NavbarEmpleadoComponent />
       <div className="titulo">
         <h1 className="text-center">Registro de Actividades Diarias</h1>
       </div>

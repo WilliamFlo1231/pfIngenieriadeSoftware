@@ -39,18 +39,31 @@ const Descuentos = () => {
     fetchData();
   }, []);
 
+  const getExpedienteNombres = (codExp) => {
+    const expedientes = expediente.find(e => e.id === codExp);
+    return expedientes ? expedientes.exp_nombres : 'Desconocido';
+  };
+
+  const getTipoDescuentoDescripcion = (codTdc) => {
+    const tipoDescuentos = tipoDescuento.find(t => t.id === codTdc);
+    return tipoDescuentos ? tipoDescuentos.tdc_descripcion : 'Desconocido';
+  };
+
+
   //metodos para sweetalert
   const handleConsultaDescuentos = async (id) => {
     try {
       const descuentos = await apiService.getDescuentosId(id);
+      const descEXP = getExpedienteNombres(descuentos.dss_codexp)
+      const descTDC = getTipoDescuentoDescripcion(descuentos.dss_codtdc)
       Swal.fire({
         title: 'Información del Descuento',
         html: `
           <div style="text-align: left;">
             <p><strong>ID:</strong> ${descuentos.id}</p>
-            <p><strong>Código EXP:</strong> ${descuentos.dss_codexp}</p>
-            <p><strong>Código PPL:</strong> ${descuentos.dss_codppl}</p>
-            <p><strong>Código TDC:</strong> ${descuentos.dss_codtdc}</p>
+            <p><strong>Nombre Expediente:</strong> ${descEXP}</p>
+            <p><strong>Código Periodo Planilla:</strong> ${descuentos.dss_codppl}</p>
+            <p><strong>Tipo de Descuento:</strong> ${descTDC}</p>
             <p><strong>Valor:</strong> ${descuentos.dss_valor}</p>
           </div>
         `,
@@ -83,22 +96,26 @@ const Descuentos = () => {
           <div style="text-align: left;">
             <label for="codigo_exp">Código EXP:</label>
             <br/>
-            <select id="codigo_exp" class="swal2-select">
-            ${expediente.map(option => `<option value="${descuentos.dss_codexp}">${option.exp_nombres}</option>`).join('')}
-          </select>
+        <select id="codigo_exp" class="swal2-select">
+          ${expediente.map(option =>
+          `<option value="${option.id}" ${option.id === descuentos.dss_codexp ? 'selected' : ''}>
+              ${option.exp_nombres} ${option.exp_apellidos}
+            </option>`
+        ).join('')}
+        </select>
             <br/>
             <div style="text-align: left;">
-            <label for="codigo_ppl">Código PPL:</label>
+            <label for="codigo_ppl">Código Periodo Planilla:</label>
             <br/>
             <select id="codigo_ppl" class="swal2-select">
-            ${periodoPlanilla.map(option => `<option value="${descuentos.dss_codppl}">${option.id}</option>`).join('')}
+            ${periodoPlanilla.map(option => `<option value="${option.id}" ${option.id === descuentos.dss_codppl ? 'selected' : ''}>${option.id}</option>`).join('')}
           </select>
             <br/>
             <div style="text-align: left;">
             <label for="codigo_tdc">Código TDC:</label>
             <br/>
             <select id="codigo_tdc" class="swal2-select">
-            ${tipoDescuento.map(option => `<option value="${descuentos.dss_codtdc}">${option.tdc_descripcion}</option>`).join('')}
+            ${tipoDescuento.map(option => `<option value="${option.id}" ${option.id === descuentos.dss_codtdc ? 'selected' : ''}>${option.tdc_descripcion}</option>`).join('')}
           </select>
             <br/>                        
             <label for="valor">Valor:</label>
@@ -122,17 +139,17 @@ const Descuentos = () => {
 
           // Llamar a la función para actualizar el descuento
           apiService.updateDescuentos(descuentos.id, {
-            dss_codexp: codigo_exp,
-            dss_codppl: codigo_ppl,
-            dss_codtdc: codigo_tdc,
+            dss_codexp: parseInt(codigo_exp),
+            dss_codppl: parseInt(codigo_ppl),
+            dss_codtdc: parseInt(codigo_tdc),
             dss_valor: valor
           });
         }
-      }).then(async(result) => {
+      }).then(async (result) => {
         if (result.isConfirmed) {
           Swal.fire('Actualización confirmada', '', 'success');
           const dataDescuentos = await apiService.getDescuentos();
-          setdescuentos(dataDescuentos);          
+          setdescuentos(dataDescuentos);
         }
       });
     } catch (error) {
@@ -157,11 +174,11 @@ const Descuentos = () => {
       cancelButtonColor: '#d33',
       confirmButtonText: 'Sí, eliminar',
       cancelButtonText: 'Cancelar'
-    }).then(async(result) => {
+    }).then(async (result) => {
       if (result.isConfirmed) {
         await apiService.deleteDescuentos(id);
         const dataDescuentos = await apiService.getDescuentos();
-        setdescuentos(dataDescuentos);        
+        setdescuentos(dataDescuentos);
         console.log('descuento eliminado');
       }
     });
@@ -185,7 +202,7 @@ const Descuentos = () => {
     </select>
       <br/>
       <div style="text-align: left;">
-      <label for="codigo_ppl">Código PPL:</label>
+      <label for="codigo_ppl">Código Periodo Planilla:</label>
       <br/>
       <select id="codigo_ppl" class="swal2-select">
       ${periodoPlanilla.map(option => `<option value="${option.id}">${option.id}</option>`).join('')}
@@ -217,25 +234,44 @@ const Descuentos = () => {
         const codigo_ppl = Swal.getPopup().querySelector('#codigo_ppl').value;
         const codigo_tdc = Swal.getPopup().querySelector('#codigo_tdc').value;
         const valor = Swal.getPopup().querySelector('#valor').value;
-
+        const camposValidos = validaCampos(codigo_exp, codigo_ppl, codigo_tdc, valor);
         // Crear el nuevo descuento
-        try {
-          await apiService.postDescuentos({
-            dss_codexp: codigo_exp,
-            dss_codppl: codigo_ppl,
-            dss_codtdc: codigo_tdc,
-            dss_valor: valor
-          });
-          Swal.fire('Creación exitosa', 'El nuevo descuento ha sido creado.', 'success');
-          const dataDescuentos = await apiService.getDescuentos();
-          setdescuentos(dataDescuentos);          
-        } catch (error) {
-          console.error('Error al crear el descuento:', error);
-          Swal.fire('Error', 'No se pudo crear el nuevo descuento.', 'error');
+        if (camposValidos) {
+          try {
+            await apiService.postDescuentos({
+              dss_codexp: parseInt(codigo_exp),
+              dss_codppl: parseInt(codigo_ppl),
+              dss_codtdc: parseInt(codigo_tdc),
+              dss_valor: valor
+            });
+            Swal.fire('Creación exitosa', 'El nuevo descuento ha sido creado.', 'success');
+            const dataDescuentos = await apiService.getDescuentos();
+            setdescuentos(dataDescuentos);
+          } catch (error) {
+            console.error('Error al crear el descuento:', error);
+            Swal.fire('Error', 'No se pudo crear el nuevo descuento.', 'error');
+          }
         }
       }
     });
   };
+
+
+  const validaCampos = (codigo_exp, codigo_ppl, codigo_tdc, valor) => {
+    if (codigo_exp === '' || codigo_ppl === '' || codigo_tdc === '' || valor === '') {
+      console.log("error")
+      Swal.fire({
+        title: 'Error',
+        text: 'Todos los campos son obligatorios',
+        icon: 'error',
+        confirmButtonColor: '#3085d6',
+        confirmButtonText: 'Ok',
+      });
+      return false;
+    }
+    return true;
+  }
+
 
 
   //fin metodos sweetalert 
@@ -254,8 +290,8 @@ const Descuentos = () => {
       sortable: true,
     },
     {
-      name: 'Código Expediente',
-      selector: row => row.dss_codexp,
+      name: 'Nombre Expediente',
+      selector: row => getExpedienteNombres(row.dss_codexp),
       sortable: true,
     },
     {

@@ -17,6 +17,7 @@ import Dashboard from './pages/Dashboard';
 import Plazas from './pages/Plazas';
 import ModificarExpediente from './pages/ModificarExpediente';
 import DashboardEmpleado from './pages/DashboardEmpleado';
+import ConsultaSolicitudVacaciones from './pages/ConsultaSolicitudVacaciones';
 
 function App() {
   return (
@@ -41,6 +42,8 @@ function App() {
             <Route path="/Dashboard" element={<Dashboard/>} />
             <Route path="/Plazas" element={<Plazas/>} />
             <Route path="/DashboardEmpleado" element={<DashboardEmpleado/>} />
+            <Route path="/ConsultaSolicitudVacaciones" element={<ConsultaSolicitudVacaciones/>} />
+
 
 
           </Routes>

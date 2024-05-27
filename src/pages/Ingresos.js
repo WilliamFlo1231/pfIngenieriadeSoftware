@@ -7,7 +7,7 @@ import apiService from '../services/services';
 const Ingresos = () => {
   const [ingresos, setingresos] = useState([]);
   const [periodoPlanilla, setPeriodoPlanilla] = useState([]);
-  const [expendiente, setExpediente] = useState([]);
+  const [expediente, setExpediente] = useState([]);
   const [tipoIngreso, setTipoIngreso] = useState([]);
 
   useEffect(() => {
@@ -19,7 +19,7 @@ const Ingresos = () => {
         const dataPeriodoPlanilla = await apiService.getPeriodoPlanilla();
         setPeriodoPlanilla(dataPeriodoPlanilla);
 
-        const dataExpendiente = await apiService.getExpendiente();
+        const dataExpendiente = await apiService.getExpedientes();
         setExpediente(dataExpendiente);
 
         const dataTipoIngreso = await apiService.getTipoIngreso();
@@ -39,18 +39,30 @@ const Ingresos = () => {
     fetchData();
   }, []);
 
+  const getExpedienteNombres = (codExp) => {
+    const expedientes = expediente.find(e => e.id === codExp);
+    return expedientes ? expedientes.exp_nombres : 'Desconocido';
+  };
+
+  const getTipoIngresoDescripcion = (codTig) => {
+    const tipoIngresos = tipoIngreso.find(t => t.id === codTig);
+    return tipoIngresos ? tipoIngresos.tig_descripcion : 'Desconocido';
+  }
+
   //metodos para sweetalert
   const handleConsultaIngresos = async (id) => {
     try {
       const ingresos = await apiService.getIngresosId(id);
+      const descEXP = getExpedienteNombres(ingresos.inn_codexp);
+      const descTIG = getTipoIngresoDescripcion(ingresos.inn_codtig);
       Swal.fire({
         title: 'Información del ingreso',
         html: `
           <div style="text-align: left;">
             <p><strong>ID:</strong> ${ingresos.id}</p>
-            <p><strong>Código PPL :</strong> ${ingresos.inn_codppl}</p>
-            <p><strong>Código Expediente:</strong> ${ingresos.inn_codexp}</p>
-            <p><strong>Código Tipo de Ingreso:</strong> ${ingresos.inn_codtig}</p>
+            <p><strong>Código Periodo Planilla :</strong> ${ingresos.inn_codppl}</p>
+            <p><strong>Nombre Expediente:</strong> ${descEXP}</p>
+            <p><strong>Tipo de Ingreso:</strong> ${descTIG}</p>
             <p><strong>Valor:</strong> ${ingresos.inn_valor}</p>
 
           </div>
@@ -74,7 +86,7 @@ const Ingresos = () => {
 
   const handleModificarIngresos = async (id) => {
     try {
-      await apiService.getExpendiente();
+      await apiService.getExpedientes();
       await apiService.getTipoIngreso();
       await apiService.getPeriodoPlanilla();
       const ingresos = await apiService.getIngresosId(id);
@@ -82,22 +94,22 @@ const Ingresos = () => {
         title: 'Modificar Ingreso',
         html: `
           <div style="text-align: left;">
-            <label for="codigo_ppl">Código PPL:</label>
+            <label for="codigo_ppl">Código Periodo Planilla:</label>
             <br/>
             <select id="codigo_ppl" class="swal2-select">
-            ${periodoPlanilla.map(option => `<option value="${ingresos.inn_codppl}">${option.id}</option>`).join('')}
+            ${periodoPlanilla.map(option => `<option value="${option.id}" ${option.id === ingresos.inn_codppl ? 'selected' : ''}>${option.id}</option>`).join('')}
           </select>
             <br/>
             <label for="codigo_exp">Código EXP:</label>
             <br/>
             <select id="codigo_exp" class="swal2-select">
-            ${expendiente.map(option => `<option value="${ingresos.inn_codexp}">${option.exp_nombres}</option>`).join('')}
+            ${expediente.map(option => `<option value="${option.id}" ${option.id === ingresos.inn_codexp ? 'selected' : ''}>${option.exp_nombres}</option>`).join('')}
           </select>
             <br/>
             <label for="codigo_tig">Código TIG:</label>
             <br/>
             <select id="codigo_tig" class="swal2-select">
-            ${tipoIngreso.map(option => `<option value="${ingresos.inn_codtig}">${option.tig_descripcion}</option>`).join('')}
+            ${tipoIngreso.map(option => `<option value="${option.id}" ${option.id === ingresos.inn_codtig ? 'selected' : ''}>${option.tig_descripcion}</option>`).join('')}
           </select>
             <br/>
             <label for="valor">Valor:</label>
@@ -122,18 +134,18 @@ const Ingresos = () => {
 
           // Llamar a la función para actualizar el periodo de planilla
           apiService.updateIngresos(ingresos.id, {
-            inn_codppl: codigo_ppl,
-            inn_codexp: codigo_exp,
-            inn_codtig: codigo_tig,
+            inn_codppl: parseInt(codigo_ppl),
+            inn_codexp: parseInt(codigo_exp),
+            inn_codtig: parseInt(codigo_tig),
             inn_valor: valor,
 
           });
         }
-      }).then(async(result) => {
+      }).then(async (result) => {
         if (result.isConfirmed) {
           Swal.fire('Actualización confirmada', '', 'success');
           const dataIngresos = await apiService.getIngresos();
-          setingresos(dataIngresos);          
+          setingresos(dataIngresos);
         }
       });
     } catch (error) {
@@ -158,19 +170,19 @@ const Ingresos = () => {
       cancelButtonColor: '#d33',
       confirmButtonText: 'Sí, eliminar',
       cancelButtonText: 'Cancelar'
-    }).then(async(result) => {
+    }).then(async (result) => {
       if (result.isConfirmed) {
         await apiService.deleteIngresos(id);
         console.log('ingreso eliminada');
         const dataIngresos = await apiService.getIngresos();
-        setingresos(dataIngresos);        
+        setingresos(dataIngresos);
       }
     });
   };
 
   const handlePostIngresos = async () => {
     // Espera a que se resuelva la promesa de los tres get
-    await apiService.getExpendiente();
+    await apiService.getExpedientes();
     await apiService.getTipoIngreso();
     await apiService.getPeriodoPlanilla();
 
@@ -179,19 +191,19 @@ const Ingresos = () => {
       title: 'Crear Nuevo Ingreso',
       html: `
       <div style="text-align: left;">
-      <label for="codigo_ppl">Código PPL:</label>
+      <label for="codigo_ppl">Código Periodo Planilla:</label>
       <br/>
       <select id="codigo_ppl" class="swal2-select">
       ${periodoPlanilla.map(option => `<option value="${option.id}">${option.id}</option>`).join('')}
     </select>
       <br/>
-      <label for="codigo_exp">Código EXP:</label>
+      <label for="codigo_exp">Nombre Expediente:</label>
       <br/>
       <select id="codigo_exp" class="swal2-select">
-      ${expendiente.map(option => `<option value="${option.id}">${option.exp_nombres}</option>`).join('')}
+      ${expediente.map(option => `<option value="${option.id}">${option.exp_nombres}</option>`).join('')}
     </select>
       <br/>
-      <label for="codigo_tig">Código TIG:</label>
+      <label for="codigo_tig">Tipo Ingreso:</label>
       <br/>
       <select id="codigo_tig" class="swal2-select">
       ${tipoIngreso.map(option => `<option value="${option.id}">${option.tig_descripcion}</option>`).join('')}
@@ -216,24 +228,43 @@ const Ingresos = () => {
         const codigo_tig = Swal.getPopup().querySelector('#codigo_tig').value;
         const valor = Swal.getPopup().querySelector('#valor').value;
 
+        const camposValidos = validaCampos(codigo_ppl, codigo_exp, codigo_tig, valor);
         // Crear el nuevo ingreso
-        try {
-          await apiService.postIngresos({
-            inn_codppl: codigo_ppl,
-            inn_codexp: codigo_exp,
-            inn_codtig: codigo_tig,
-            inn_valor: valor,
-          });
-          Swal.fire('Creación exitosa', 'El nuevo ingreso ha sido creado.', 'success');
-          const dataIngresos = await apiService.getIngresos();
-          setingresos(dataIngresos);          
-        } catch (error) {
-          console.error('Error al crear el ingreso:', error);
-          Swal.fire('Error', 'No se pudo crear el ingreso.', 'error');
+        if (camposValidos) {
+          try {
+            await apiService.postIngresos({
+              inn_codppl: parseInt(codigo_ppl),
+              inn_codexp: parseInt(codigo_exp),
+              inn_codtig: parseInt(codigo_tig),
+              inn_valor: valor,
+            });
+            Swal.fire('Creación exitosa', 'El nuevo ingreso ha sido creado.', 'success');
+            const dataIngresos = await apiService.getIngresos();
+            setingresos(dataIngresos);
+          } catch (error) {
+            console.error('Error al crear el ingreso:', error);
+            Swal.fire('Error', 'No se pudo crear el ingreso.', 'error');
+          }
         }
       }
     });
+
+
   };
+
+  const validaCampos = (codigo_ppl, codigo_exp, codigo_tig, valor) => {
+    if (codigo_ppl === '' || codigo_exp === '' || codigo_tig === '' || valor === '') {
+      Swal.fire({
+        title: 'Error',
+        text: 'Todos los campos son obligatorios',
+        icon: 'error',
+        confirmButtonColor: '#3085d6',
+        confirmButtonText: 'Ok',
+      });
+      return false;
+    }
+    return true;
+  }
 
 
   //fin metodos sweetalert 
@@ -252,18 +283,13 @@ const Ingresos = () => {
       sortable: true,
     },
     {
-      name: 'Código Periodo Planilla',
-      selector: row => row.inn_codppl,
+      name: 'Nombre Expediente',
+      selector: row => getExpedienteNombres(row.inn_codexp),
       sortable: true,
     },
     {
-      name: 'Código Expediente',
-      selector: row => row.inn_codexp,
-      sortable: true,
-    },
-    {
-      name: 'Código Tipo Ingreso',
-      selector: row => row.inn_codtig,
+      name: 'Tipo Ingreso',
+      selector: row => getTipoIngresoDescripcion(row.inn_codtig),
       sortable: true,
     },
     {

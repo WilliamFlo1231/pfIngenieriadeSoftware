@@ -30,16 +30,22 @@ const PeriodoPlanilla = () => {
     fetchData();
   }, []);
 
+  const getTipoPlanillaDescripcion = (codTpl) => {
+    const tiposPlanilla = tipoPlanilla.find(t => t.id === codTpl);
+    return tiposPlanilla ? tiposPlanilla.tpl_nombre : 'Desconocido';
+  };
+
   //metodos para sweetalert
   const handleConsultaPeriodoPlanilla = async (id) => {
+    const periodoPlanilla = await apiService.getPeriodoPlanillaId(id);
+    const descTPL = getTipoPlanillaDescripcion(periodoPlanilla.ppl_codigo_tpl)
     try {
-      const periodoPlanilla = await apiService.getPeriodoPlanillaId(id);
       Swal.fire({
         title: 'Información del Período Planilla',
         html: `
           <div style="text-align: left;">
             <p><strong>ID:</strong> ${periodoPlanilla.id}</p>
-            <p><strong>Código TPL:</strong> ${periodoPlanilla.ppl_codigo_tpl}</p>
+            <p><strong>Tipo Planilla:</strong> ${descTPL}</p>
             <p><strong>Código Visual:</strong> ${periodoPlanilla.ppl_codigo_visual}</p>
             <p><strong>Estado:</strong> ${periodoPlanilla.ppl_estado}</p>
             <p><strong>Fecha de Inicio:</strong> ${periodoPlanilla.ppl_fecha_ini}</p>
@@ -73,10 +79,10 @@ const PeriodoPlanilla = () => {
         title: 'Modificar Periodo Planilla',
         html: `
           <div style="text-align: left;">
-            <label for="codigo_tpl">Código TPL:</label>
+            <label for="codigo_tpl">Tipo Planilla:</label>
             <br/>
             <select id="codigo_tpl" class="swal2-select">
-            ${tipoPlanilla.map(option => `<option value="${periodoPlanilla.ppl_codigo_tpl}">${option.tpl_nombre}</option>`).join('')}
+            ${tipoPlanilla.map(option => `<option value="${option.id}" ${option.id === tipoPlanilla.ppl_codtpl ? 'selected' : ''}>${option.tpl_nombre}</option>`).join('')}
           </select>
             <br/>
             <label for="codigo_visual">Código Visual:</label>
@@ -85,7 +91,11 @@ const PeriodoPlanilla = () => {
             <br/>
             <label for="estado">Estado:</label>
             <br/>
-            <input type="text" id="estado" class="swal2-input" placeholder="Ingrese el estado" value="${periodoPlanilla.ppl_estado}">
+            <select id="estado" class="swal2-select">
+            <option value="activo" ${periodoPlanilla.ppl_estado === 'activo' ? 'selected' : ''}>Activo</option>
+            <option value="inactivo" ${periodoPlanilla.ppl_estado === 'inactivo' ? 'selected' : ''}>Inactivo</option>
+          </select>
+            
             <br/>
             <label for="fecha_ini">Fecha de Inicio:</label>
             <br/>
@@ -122,7 +132,7 @@ const PeriodoPlanilla = () => {
 
           // Llamar a la función para actualizar el periodo de planilla
           apiService.updatePeriodoPlanilla(periodoPlanilla.id, {
-            ppl_codigo_tpl: codigo_tpl,
+            ppl_codigo_tpl: parseInt(codigo_tpl),
             ppl_codigo_visual: codigo_visual,
             ppl_estado: estado,
             ppl_fecha_ini: fecha_ini,
@@ -130,7 +140,7 @@ const PeriodoPlanilla = () => {
             ppl_anio: anio,
             ppl_mes: mes
           });
-          
+
         }
       }).then(async (result) => {
         if (result.isConfirmed) {
@@ -161,7 +171,7 @@ const PeriodoPlanilla = () => {
       cancelButtonColor: '#d33',
       confirmButtonText: 'Sí, eliminar',
       cancelButtonText: 'Cancelar'
-    }).then(async(result) => {
+    }).then(async (result) => {
       if (result.isConfirmed) {
         // Aquí puedes agregar la lógica para eliminar la PeriodoPlanilla
         await apiService.deletePeriodoPlanilla(id);
@@ -181,10 +191,10 @@ const PeriodoPlanilla = () => {
       title: 'Crear Periodo Planilla',
       html: `
         <div style="text-align: left;">
-          <label for="codigo_tpl">Código TPL:</label>
+          <label for="codigo_tpl">Tipo Planilla:</label>
           <br/>
           <select id="codigo_tpl" class="swal2-select">
-            ${tipoPlanilla.map(option => `<option value="${option.id}">${option.tpl_nombre}</option>`).join('')}
+            ${tipoPlanilla.map(option => `<option value="${option.id}" ${option.id === tipoPlanilla.ppl_codtpl ? 'selected' : ''}>${option.tpl_nombre}</option>`).join('')}
           </select>
           <br/>
           <label for="codigo_visual">Código Visual:</label>
@@ -193,7 +203,10 @@ const PeriodoPlanilla = () => {
           <br/>
           <label for="estado">Estado:</label>
           <br/>
-          <input type="text" id="estado" class="swal2-input" placeholder="Ingrese el estado">
+          <select id="estado" class="swal2-select">
+          <option value="activo" ${periodoPlanilla.ppl_estado === 'activo' ? 'selected' : ''}>Activo</option>
+          <option value="inactivo" ${periodoPlanilla.ppl_estado === 'inactivo' ? 'selected' : ''}>Inactivo</option>
+        </select>
           <br/>
           <label for="fecha_ini">Fecha de Inicio:</label>
           <br/>
@@ -228,27 +241,46 @@ const PeriodoPlanilla = () => {
         const anio = Swal.getPopup().querySelector('#anio').value;
         const mes = Swal.getPopup().querySelector('#mes').value;
 
-        // Crear el nuevo periodo de planilla
-        try {
-          await apiService.postPeriodoPlanilla({
-            ppl_codigo_tpl: codigo_tpl,
-            ppl_codigo_visual: codigo_visual,
-            ppl_estado: estado,
-            ppl_fecha_ini: fecha_ini,
-            ppl_fecha_fin: fecha_fin,
-            ppl_anio: anio,
-            ppl_mes: mes
-          });
-          Swal.fire('Creación exitosa', 'El nuevo periodo de planilla ha sido creado.', 'success');
-          const dataPeriodoPlanilla = await apiService.getPeriodoPlanilla();
-          setPeriodoPlanilla(dataPeriodoPlanilla);
-        } catch (error) {
-          console.error('Error al crear el periodo de planilla:', error);
-          Swal.fire('Error', 'No se pudo crear el nuevo periodo de planilla.', 'error');
+        const camposValidos = validaCampos(codigo_tpl, codigo_visual, estado, fecha_ini, fecha_fin, anio, mes);
+        if (camposValidos) {
+
+          // Crear el nuevo periodo de planilla
+          try {
+            await apiService.postPeriodoPlanilla({
+              ppl_codigo_tpl: parseInt(codigo_tpl),
+              ppl_codigo_visual: codigo_visual,
+              ppl_estado: estado,
+              ppl_fecha_ini: fecha_ini,
+              ppl_fecha_fin: fecha_fin,
+              ppl_anio: anio,
+              ppl_mes: mes
+            });
+            Swal.fire('Creación exitosa', 'El nuevo periodo de planilla ha sido creado.', 'success');
+            const dataPeriodoPlanilla = await apiService.getPeriodoPlanilla();
+            setPeriodoPlanilla(dataPeriodoPlanilla);
+          } catch (error) {
+            console.error('Error al crear el periodo de planilla:', error);
+            Swal.fire('Error', 'No se pudo crear el nuevo periodo de planilla.', 'error');
+          }
         }
       }
     });
   };
+
+  const validaCampos = (codigo_tpl, codigo_visual, estado, fecha_ini, fecha_fin, anio, mes) => {
+    if (codigo_tpl === '' || codigo_visual === '' || estado === '' || fecha_ini === '' || fecha_fin === '' || anio === '' || mes === '') {
+      console.log("error")
+      Swal.fire({
+        title: 'Error',
+        text: 'Todos los campos son obligatorios',
+        icon: 'error',
+        confirmButtonColor: '#3085d6',
+        confirmButtonText: 'Ok',
+      });
+      return false;
+    }
+    return true;
+  }
 
 
   //fin metodos sweetalert 

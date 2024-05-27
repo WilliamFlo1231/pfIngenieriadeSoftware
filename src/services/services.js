@@ -12,6 +12,7 @@ const urlMAR = 'http://localhost:3000/mar_marcas';
 const urlJRN = 'http://localhost:3000/jor_jornadas';
 const urlFPA = 'http://localhost:3000/fpa_formas_pagos';
 const urlTPC = 'http://localhost:3000/tpc_tipo_contrato';
+const urlSDV = 'http://localhost:3000/sdv_solicitudes_vacaciones';
 
 const apiService = {
 
@@ -255,6 +256,12 @@ const apiService = {
     // console.log(response.data);
   },
 
+  getMarcaId: async (id) => {
+    const response = await axios.get(`${urlMAR}/${id}`);
+    return response.data;
+    // console.log(response.data);
+  },
+
   deleteMarca: async (id) => {
     const response = await axios.delete(`${urlMAR}/${id}`);
     console.log(response);
@@ -310,6 +317,45 @@ const apiService = {
       return response.data;
     } catch (error) {
       console.error('Error al realizar la consulta:', error);
+    }
+  },
+
+  ////////////////////////// SOLICITUD DE VACACIONES //////////////////////////
+  getSolicitudVacaciones: async () => {
+    try {
+      const response = await axios.get(urlSDV);
+      return response.data;
+    } catch (error) {
+      console.error('Error al realizar la consulta:', error);
+    }
+  },
+
+  getSolicitudVacacionesId: async (id) => {
+    try {
+      const response = await axios.get(`${urlSDV}/${id}`);
+      return response.data;
+    } catch (error) {
+      console.error('Error al consultar la solicitud de vacaciones por ID:', error);
+      throw error;
+    }
+  },
+
+  postSolicitudVacaciones: async (nuevaSolicitud) => {
+    try {
+      const response = await axios.post(urlSDV, nuevaSolicitud);
+      console.log('Nueva solicitud de vacaciones creada:', response.data);
+    } catch (error) {
+      console.error('Error al crear la nueva solicitud de vacaciones:', error);
+      throw error;
+    }
+  },
+
+  updateSolicitudVacaciones: async (id, newData) => {
+    try {
+      const response = await axios.put(`${urlSDV}/${id}`, newData);
+      console.log(response);
+    } catch (error) {
+      console.error('Error al actualizar la solicitud de vacaciones:', error);
     }
   },
 
