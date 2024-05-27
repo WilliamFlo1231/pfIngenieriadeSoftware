@@ -89,7 +89,19 @@ function IngresoExpediente() {
       return;
     }
 
-    //+validarFechaNacimiento(fechaNacimiento)
+    var stringDescuentaRenta = ""
+    if (descuentaRenta == true) {
+      stringDescuentaRenta = "1";
+    } else {
+      stringDescuentaRenta = "0";
+    }
+
+    var stringDescuentaSeguroSocial = ""
+    if (descuentaSeguroSocial == true) {
+      stringDescuentaSeguroSocial = "1";
+    } else {
+      stringDescuentaSeguroSocial = "0";
+    }
 
 
     const nuevoExpediente = {
@@ -105,8 +117,8 @@ function IngresoExpediente() {
       exp_identificacion: identificacion,
       exp_cuenta_banco: cuentaBanco,
       exp_fecha_ini: fechaInicio,
-      exp_descuenta_renta: descuentaRenta,
-      exp_decuenta_seguro_social: descuentaSeguroSocial,
+      exp_descuenta_renta: stringDescuentaRenta,
+      exp_decuenta_seguro_social: stringDescuentaSeguroSocial,
     };
 
     try {
@@ -176,7 +188,7 @@ function IngresoExpediente() {
     }).then((result) => {
       if (result.isConfirmed) {
         // Aquí puedes agregar la lógica para eliminar la marca
-        console.log('Marca eliminada');
+        console.log('error');
       }
     });
   };
