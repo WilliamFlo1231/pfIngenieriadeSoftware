@@ -1,6 +1,5 @@
 import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Landing from './pages/Landing';
 import HorasExtra from './pages/HorasExtra';
 import Marcaciones from './pages/Marcaciones';
 import AutoGestion from './pages/AutoGestion';
@@ -39,7 +38,7 @@ function App() {
             <Route path="/ConsultaDescuentos" element={<Descuentos/>} />
             <Route path="/ConsultaIngresos" element={<Ingresos/>} />
             <Route path="/Login" element={<Login/>} />
-            <Route path="/Dashboard" element={<Dashboard/>} />
+            <Route path="/DashboardAdmin" element={<Dashboard/>} />
             <Route path="/Plazas" element={<Plazas/>} />
             <Route path="/DashboardEmpleado" element={<DashboardEmpleado/>} />
             <Route path="/ConsultaSolicitudVacaciones" element={<ConsultaSolicitudVacaciones/>} />

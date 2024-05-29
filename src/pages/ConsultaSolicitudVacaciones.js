@@ -100,7 +100,15 @@ function ConsultaSolicitudVacaciones() {
 
   const handleRechaza = async (id) => {
     try {
-      await apiService.updateSolicitudVacaciones(id, { sdv_estado: "Rechazado" });
+      const solicitud = await apiService.getSolicitudVacacionesId(id);
+      await apiService.updateSolicitudVacaciones(id, { 
+        sdv_codexp: solicitud.sdv_codexp,
+        sdv_fecha_solicitud: solicitud.sdv_fecha_solicitud,
+        sdv_desde: solicitud.sdv_desde,
+        sdv_hasta: solicitud.sdv_hasta,
+        sdv_dias: solicitud.sdv_dias,
+        sdv_estado: "Rechazado"
+      });
       const dataSolicitudVacaciones = await apiService.getSolicitudVacaciones();
       setSolicitudVacaciones(dataSolicitudVacaciones);
       Swal.fire({

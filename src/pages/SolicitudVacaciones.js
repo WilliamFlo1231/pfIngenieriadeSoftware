@@ -3,6 +3,7 @@ import NavbarEmpleadoComponent from '../components/NavbarEmpleadoComponent';
 import Swal from 'sweetalert2'
 import apiService from '../services/services'; // Asegúrate de importar tu servicio
 import { useNavigate } from "react-router-dom";
+import Cookies from 'js-cookie';
 
 const SolicitudVacaciones = () => {
   const navigate = useNavigate();
@@ -10,12 +11,19 @@ const SolicitudVacaciones = () => {
   const [fechaFin, setFechaFin] = useState('');
   const [diasDisponibles, setDiasDisponibles] = useState('');
 
+  const user = Cookies.get('user');
+  var userData = {};
+  if (user) {
+    userData = JSON.parse(user);
+    console.log(userData.expid);
+  }
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     const diasHabiles = calcularDiasHabiles(fechaInicio, fechaFin);
     const nuevaSolicitud = {
 
-      sdv_codexp: 1,
+      sdv_codexp: parseInt(userData.expid),
       sdv_fecha_solicitud: new Date().toISOString().split('T')[0],
       sdv_desde: fechaInicio,
       sdv_hasta: fechaFin,

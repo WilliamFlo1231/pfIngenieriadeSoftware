@@ -1,7 +1,51 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useState } from 'react';
+import apiService from '../services/services';
+import { useNavigate } from "react-router-dom";
+import Swal from 'sweetalert2'
+import Cookies from 'js-cookie';
+
 
 function Login() {
+  const navigate = useNavigate();
+  const [user, setUser] = useState([]);
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const email = document.getElementById('exampleInputEmail').value;
+    const password = document.getElementById('exampleInputPassword').value;
+    const dataUsuarios = await apiService.getUsuarios();
+    setUser(dataUsuarios);
+    
+    const user = dataUsuarios.find(u => u.usr_correo_usuario === email && u.usr_password === password);
+    if (user) {
+        // Grabar la cookie
+        Cookies.set('user', JSON.stringify({
+          email: user.usr_correo_usuario,
+          role: user.usr_rol,
+          expid: user.usr_codexp
+        }), { expires: 1 }); // La cookie expirará en 1 día
+
+        Swal.fire('Success', 'Login successful', 'success');              
+      console.log(user.usr_usuario)
+      console.log("se encontró registro")
+      if (user.usr_rol === 'Usuario') {
+
+
+        navigate("/DashboardEmpleado");
+      }
+      if (user.usr_rol === 'Administrador') {
+        navigate("/DashboardAdmin");
+      }      
+      
+    } else {
+      Swal.fire('Error', 'Las Credenciales no son correctas', 'error');
+      console.error('Usuario no autenticado');
+    }    
+
+    
+  }
+
+
   return (
     <div className="container">
       <div className="row justify-content-center">
@@ -17,7 +61,7 @@ function Login() {
                     <div className="text-center">
                       <h1 className="h4 text-gray-900 mb-4">Bienvenido a HR360!</h1>
                     </div>
-                    <form className="user">
+                    <form className="user" onSubmit={handleSubmit}>
                       <div className="form-group">
                         <input
                           type="email"
@@ -47,11 +91,9 @@ function Login() {
                           </label>
                         </div>
                       </div>
-                      <Link to={"/Dashboard"}>
                         <button className="btn btn-primary btn-user btn-block">
                           Login
                         </button>
-                      </Link>
                       <hr />
                       <button className="btn btn-google btn-user btn-block">
                         <i className="fab fa-google fa-fw"></i> Login with Google

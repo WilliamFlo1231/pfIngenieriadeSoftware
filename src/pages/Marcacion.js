@@ -1,36 +1,30 @@
 import React, { useState, useEffect } from 'react';
-import NavbarComponent from '../components/NavbarComponent';
 import Reloj from '../components/Reloj';
 import TableComponent from '../components/TableComponent';
-import axios from 'axios'
 import NavbarEmpleadoComponent from '../components/NavbarEmpleadoComponent';
+import apiService from '../services/services';
+import Swal from 'sweetalert2';
+import Cookies from 'js-cookie';
 
 
-const RegistroBotones = ({ onRegistro }) => {
+
+
+const RegistroBotones = ({ tipoMarcas, onRegistro }) => {
   return (
     <div className="text-center">
       {/* Mostrar el componente Reloj */}
       <Reloj />
 
       <div className="btn-group mt-4">
-        <button className="btn btn-primary mr-2" onClick={() => onRegistro('Entrada')}>
-          Entrada
-        </button>
-        <button className="btn btn-primary mr-2" onClick={() => onRegistro('Inicio Almuerzo')}>
-          Inicio Almuerzo
-        </button>
-        <button className="btn btn-primary mr-2" onClick={() => onRegistro('Fin Almuerzo')}>
-          Fin Almuerzo
-        </button>
-        <button className="btn btn-primary mr-2" onClick={() => onRegistro('Inicio Receso')}>
-          Inicio Receso
-        </button>
-        <button className="btn btn-primary mr-2" onClick={() => onRegistro('Fin Receso')}>
-          Fin Receso
-        </button>
-        <button className="btn btn-primary" onClick={() => onRegistro('Salida')}>
-          Salida
-        </button>
+        {tipoMarcas.map((tipoMarca, index) => (
+          <button
+            key={index}
+            className="btn btn-primary mr-2"
+            onClick={() => onRegistro(tipoMarca.tma_descripcion)}
+          >{tipoMarca.tma_descripcion}
+            {tipoMarca.tpm_descripcion}
+          </button>
+        ))}
       </div>
     </div>
   );
@@ -40,47 +34,51 @@ const RegistroBotones = ({ onRegistro }) => {
 
 
 const Marcacion = () => {
-  const url = "  http://localhost:3000/mar_marcas"
+  const user = Cookies.get('user');
+  var userData = {};
+  if (user) {
+    userData = JSON.parse(user);
+    console.log(userData.expid);
+  }
+
   const [marcas, setMarcas] = useState([]);
-  const [id, setId] = useState('');
-  const [fecha, setFecha] = useState('');
-  const [hora, setHora] = useState('');
-  const [tipoMarca, setTipoMarca] = useState('');
+  const [tipoMarcas, setTipoMarcas] = useState([]);
 
   useEffect(() => {
-    getMarcas();
-  }
-    , []);
+    const fetchData = async () => {
+      try {
+        const dataMarcas = await apiService.getMarcas();
+        setMarcas(dataMarcas);
 
-  const getMarcas = async () => {
-    const response = await axios.get(url);
-    setMarcas(response.data);
-  }
+        const dataTipoMarcas = await apiService.getTipoMarcas();
+        setTipoMarcas(dataTipoMarcas);
 
-  const postMarcas = async () => { 
-    const response = await axios.post(url, {
-      id: id,
-      mar_fecha: fecha,
-      mar_hora: hora,
-      mar_estado: tipoMarca
-    });
-  }
+      } catch (error) {
+        console.error('Error al obtener datos:', error);
+        Swal.fire({
+          title: 'Error',
+          text: 'No se pudo obtener la información necesaria.',
+          icon: 'error',
+          confirmButtonText: 'Ok',
+        });
+      }
+    };
 
-  useEffect(() => {
-    if (id !== '' && fecha !== '' && hora !== '' && tipoMarca !== '') {
-      postMarcas();
-    }
-  }, [id, fecha, hora, tipoMarca]);
-
+    fetchData();
+  }, []);
 
   const handleRegistro = (tipo) => {
     const now = new Date();
     const fechaActual = now.toLocaleDateString();
-    setFecha(fechaActual);
     const horaActual = now.toLocaleTimeString();
-    setHora(horaActual);
-    setTipoMarca(tipo);
-    setId(marcas.length + 1);        
+    const marca = {
+      mar_hora: horaActual,
+      mar_fecha: fechaActual,
+      mar_estado: tipo,
+      mar_codexp: parseInt(userData.expid),
+    };
+
+    apiService.postMarca(marca);
     window.location.reload();
   };
 
@@ -101,16 +99,16 @@ const Marcacion = () => {
       sortable: true,
     },
   ];
-  
+
   return (
     <div>
       <NavbarEmpleadoComponent />
       <div className="titulo">
         <h1 className="text-center">Registro de Actividades Diarias</h1>
       </div>
-      <RegistroBotones onRegistro={handleRegistro} />
+      <RegistroBotones tipoMarcas={tipoMarcas} onRegistro={handleRegistro} />
       <hr />
-      <TableComponent datostabla={marcas} columnas={columnas}/>
+      <TableComponent datostabla={marcas} columnas={columnas} />
     </div>
   );
 };

@@ -1,4 +1,6 @@
 import axios from 'axios';
+
+
 const urlPPL = 'http://localhost:3000/ppl_periodos_planilla';
 const urlCTC = 'http://localhost:3000/cco_centro_costos';
 const urlPLZ = 'http://localhost:3000/plz_plazas';
@@ -13,6 +15,14 @@ const urlJRN = 'http://localhost:3000/jor_jornadas';
 const urlFPA = 'http://localhost:3000/fpa_formas_pagos';
 const urlTPC = 'http://localhost:3000/tpc_tipo_contrato';
 const urlSDV = 'http://localhost:3000/sdv_solicitudes_vacaciones';
+const urlTMA = 'http://localhost:3000/tma_tipo_marca';
+const urlUSR = 'http://localhost:3000/usr_usuarios';
+
+
+
+
+
+
 
 const apiService = {
 
@@ -267,6 +277,31 @@ const apiService = {
     console.log(response);
   },
 
+  postMarca: async (nuevaMarca) => {
+    try {
+      const response = await axios.post(urlMAR, nuevaMarca);
+      console.log('Nueva marca creada:', response.data);
+    } catch (error) {
+      console.error('Error al crear la nueva marca:', error);
+      throw error;
+    }
+  },
+
+
+  ////////////////////////// TIPO DE MARCAS //////////////////////////
+
+  getTipoMarcas: async () => {
+    try {
+      const response = await axios.get(urlTMA);
+      return response.data;
+    } catch (error) {
+      console.error('Error al obtener Tipo de marca:', error);
+      throw error;
+    }
+
+  },
+
+
   ////////////////////////// CENTRO DE COSTOS //////////////////////////
 
   getCentroDeCosto: async () => {
@@ -421,6 +456,20 @@ const apiService = {
     }
   },
 
+  ////////////////////////// USUARIOS //////////////////////////
+
+  getUsuarios: async () => {
+    try {
+      const response = await axios.get(urlUSR);
+      return response.data;
+    } catch (error) {
+      console.error('Error al realizar la consulta:', error);
+    }
+  },
+
+
 };
+
+
 
 export default apiService;

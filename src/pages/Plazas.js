@@ -86,7 +86,7 @@ const Plazas = () => {
             <br/>
           <select id="plz_es_temporal" class="swal2-select">
           <option value="Verdadero" ${plazas.plz_es_temporal === 'Verdadero' ? 'selected' : ''}>Verdadero</option>
-          <option value="inactivo" ${plazas.plz_es_temporal === 'Falso' ? 'selected' : ''}>Falso</option> 
+          <option value="Falso" ${plazas.plz_es_temporal === 'Falso' ? 'selected' : ''}>Falso</option> 
         </select>          
             <br/>
             <label for="plz_fecha_ini">Fecha inicio:</label>
@@ -175,7 +175,7 @@ const Plazas = () => {
       <label for="plz_codcco">Centro de costos:</label>
       <br/>
       <select id="plz_codcco" class="swal2-select">
-      ${centroDeCosto.map(option => `<option value="${plazas.plz_codcco}">${option.cco_descripcion}</option>`).join('')}
+      ${centroDeCosto.map(option => `<option value="${option.id}"  ${option.id === centroDeCosto.plz_codcco ? 'selected' : ''}>${option.cco_descripcion}</option>`).join('')}
     </select>
       <br/>
       <label for="plz_nombre">Nombre:</label>
@@ -184,10 +184,10 @@ const Plazas = () => {
       <br/>
       <label for="plz_es_temporal">Plaza temporal:</label>
       <br/>
-      <select id="plz_es_temporal" class="swal2-select">
-      <option value="true" ${plazas.plz_es_temporal === true ? 'selected' : ''}>Verdadero</option>
-      <option value="false" ${plazas.plz_es_temporal === false ? 'selected' : ''}>Falso</option>
-    </select>
+    <select id="plz_es_temporal" class="swal2-select">
+    <option value="Verdadero" ${plazas.plz_es_temporal === 'Verdadero' ? 'selected' : ''}>Verdadero</option>
+    <option value="Falso" ${plazas.plz_es_temporal === 'Falso' ? 'selected' : ''}>Falso</option> 
+  </select>       
       <br/>
       <label for="plz_fecha_ini">Fecha inicio:</label>
       <br/>
@@ -212,13 +212,12 @@ const Plazas = () => {
         const plz_es_temporal = Swal.getPopup().querySelector('#plz_es_temporal').value;
         const plz_fecha_ini = Swal.getPopup().querySelector('#plz_fecha_ini').value;
         const plz_fecha_fin = Swal.getPopup().querySelector('#plz_fecha_fin').value;
-        var isTrueSet = (plz_es_temporal === 'true');
         // Crear el nuevo ingreso
         try {
           await apiService.postPlazas({
             plz_codcco: plz_codcco,
             plz_nombre: plz_nombre,
-            plz_es_temporal: isTrueSet,
+            plz_es_temporal: plz_es_temporal,
             plz_fecha_ini: plz_fecha_ini,
             plz_fecha_fin: plz_fecha_fin,
           });
@@ -243,7 +242,6 @@ const Plazas = () => {
     </div>
   );
 
-  const convertirBooleano = (valor) => valor ? 'VERDADERO' : 'FALSO';
 
   const columnas = [
     {
@@ -258,11 +256,11 @@ const Plazas = () => {
     },
     {
       name: 'Es temporal',
-      selector: row => convertirBooleano(row.plz_es_temporal),
+      selector: row => row.plz_es_temporal,
       sortable: true,
     },
     {
-      name: 'Valor',
+      name: 'Acciones',
       cell: accionesBotones,
       style: {
         width: '200px', // Ajusta el tamaño de la columna "Acciones" según sea necesario
