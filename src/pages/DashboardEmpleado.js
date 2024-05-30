@@ -4,6 +4,8 @@ import CardEmpleado from '../components/CardEmpleado'
 import { Link } from 'react-router-dom'
 import Cookies from 'js-cookie';
 import apiService from '../services/services';
+import { PDFDownloadLink } from '@react-pdf/renderer';
+import PdfComponent from '../components/PdfComponent';
 
 
 
@@ -13,8 +15,8 @@ function DashboardEmpleado() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const dataExpediente = await apiService.getExpedientes();
-        setExpediente(dataExpediente);
+          const dataExpediente = await apiService.getExpedienteId(userData.expid);
+          setExpediente(dataExpediente);
       } catch (error) {
         console.error('Error al obtener datos:', error);
       }
@@ -29,14 +31,16 @@ function DashboardEmpleado() {
   if (user) {
     userData = JSON.parse(user);
   }
-  const getExpedienteNombres = (codExp) => {
+  const getExpedienteNombres = (codExp) => {  
+    return expediente.exp_nombres + " " + expediente.exp_apellidos;
 
-    const expedientes = expediente.find(e => e.id === codExp);
-    return expedientes ? expedientes.exp_nombres : 'Desconocido';
   };
   var userData
 
   const nombreExp = getExpedienteNombres(parseInt(userData.expid));
+  const noDPI = expediente.exp_identificacion;
+  const fechaInicio = expediente.exp_fecha_ini;
+  const cargo = expediente.exp_codplz;
   return (
     <div>
       <NavbarEmpleadoComponent />
@@ -50,11 +54,15 @@ function DashboardEmpleado() {
             titulo="Ingresar Marcacion"
             imagen={"https://th.bing.com/th/id/R.5d028aad5cd1340daaf1bcc9e373fb92?rik=M8wtOwJ8dxTAAA&pid=ImgRaw&r=0"} />
         </Link>
-        <Link style={{ textDecoration: "none" }} to={"/Marcacion"}>
-          <CardEmpleado
-            titulo="Generar Constancia Laboral"
-            imagen={"https://img.freepik.com/free-vector/big-isolated-employee-working-office-workplace-flat-illustration_1150-41780.jpg?t=st=1716741373~exp=1716744973~hmac=2b34406790374fa3fe7cf6f499e3ea47b9a54aea2f0fc705b23d44ecff472c71&w=996"} />
-        </Link>
+        <PDFDownloadLink document={
+        <PdfComponent 
+        nombre={nombreExp}
+        dpi={noDPI}
+        fechaInicio={fechaInicio}/>} fileName="constancia.pdf">
+            <CardEmpleado
+              titulo="Generar Constancia Laboral"
+              imagen={"https://img.freepik.com/free-vector/big-isolated-employee-working-office-workplace-flat-illustration_1150-41780.jpg?t=st=1716741373~exp=1716744973~hmac=2b34406790374fa3fe7cf6f499e3ea47b9a54aea2f0fc705b23d44ecff472c71&w=996"} />
+        </PDFDownloadLink>
         <Link style={{ textDecoration: "none" }} to={"/SolicitudVacaciones"}>
           <CardEmpleado
             titulo="Solicitar Vacaciones"

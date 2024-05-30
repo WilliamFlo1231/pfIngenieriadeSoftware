@@ -25,7 +25,6 @@ function Login() {
           expid: user.usr_codexp
         }), { expires: 1 }); // La cookie expirará en 1 día
 
-        Swal.fire('Success', 'Login successful', 'success');              
       console.log(user.usr_usuario)
       console.log("se encontró registro")
       if (user.usr_rol === 'Usuario') {
