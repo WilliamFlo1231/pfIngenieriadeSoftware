@@ -6,6 +6,20 @@
       "mar_fecha": "26/5/2024",
       "mar_hora": "10:15:44",
       "mar_estado": "Entrada"
+    },
+    {
+      "mar_hora": "20:57:08",
+      "mar_fecha": "30/5/2024",
+      "mar_estado": "Entrada",
+      "mar_codexp": 2,
+      "id": 2
+    },
+    {
+      "mar_hora": "20:57:10",
+      "mar_fecha": "30/5/2024",
+      "mar_estado": "Inicio Almuerzo",
+      "mar_codexp": 2,
+      "id": 3
     }
   ],
   "ppl_periodos_planilla": [
@@ -513,6 +527,15 @@
       "sdv_dias": 6,
       "sdv_estado": "Pendiente Aprobacion",
       "id": 4
+    },
+    {
+      "sdv_codexp": 2,
+      "sdv_fecha_solicitud": "2024-05-31",
+      "sdv_desde": "2024-05-30",
+      "sdv_hasta": "2024-06-07",
+      "sdv_dias": 7,
+      "sdv_estado": "Pendiente Aprobacion",
+      "id": 5
     }
   ],
   "usr_usuarios": [
@@ -535,6 +558,78 @@
       "usr_password": "user",
       "usr_rol": "Usuario",
       "id": 2
+    }
+  ],
+  "hpa_historial_pago": [
+    {
+      "id": 1,
+      "hpa_codppl": 1,
+      "hpa_codexp": 1,
+      "hpa_fecha_pago": "2024-05-26",
+      "hpa_salario": "150.5",
+      "hpa_anio": "2024",
+      "hpa_mes": "5",
+      "hpa_descrpcion": "Pago de salario de mayo 2024 a Juan Carlos Pérez"
+    },
+    {
+      "id": 2,
+      "hpa_codppl": 1,
+      "hpa_codexp": 2,
+      "hpa_fecha_pago": "2024-05-26",
+      "hpa_salario": "150.5",
+      "hpa_anio": "2024",
+      "hpa_mes": "5",
+      "hpa_descrpcion": "Pago de salario de mayo 2024 a carlos adolfo sagastume perez"
+    },
+    {
+      "id": 3,
+      "hpa_codppl": 1,
+      "hpa_codexp": 3,
+      "hpa_fecha_pago": "2024-05-26",
+      "hpa_salario": "150.5",
+      "hpa_anio": "2024",
+      "hpa_mes": "5",
+      "hpa_descrpcion": "Pago de salario de mayo 2024 a test adolfo perez perez"
+    },
+    {
+      "id": 4,
+      "hpa_codppl": 1,
+      "hpa_codexp": 4,
+      "hpa_fecha_pago": "2024-05-26",
+      "hpa_salario": "150.5",
+      "hpa_anio": "2024",
+      "hpa_mes": "5",
+      "hpa_descrpcion": "Pago de salario de mayo 2024 a Edgar Rodas"
+    },
+    {
+      "id": 5,
+      "hpa_codppl": 1,
+      "hpa_codexp": 5,
+      "hpa_fecha_pago": "2024-05-26",
+      "hpa_salario": "150.5",
+      "hpa_anio": "2024",
+      "hpa_mes": "5",
+      "hpa_descrpcion": "Pago de salario de mayo 2024 a Edgar Rodas"
+    },
+    {
+      "id": 6,
+      "hpa_codppl": 1,
+      "hpa_codexp": 6,
+      "hpa_fecha_pago": "2024-05-26",
+      "hpa_salario": "150.5",
+      "hpa_anio": "2024",
+      "hpa_mes": "5",
+      "hpa_descrpcion": "Pago de salario de"
+    },
+    {
+      "id": 7,
+      "hpa_codppl": 1,
+      "hpa_codexp": 2,
+      "hpa_fecha_pago": "2024-04-26",
+      "hpa_salario": "150.5",
+      "hpa_anio": "2024",
+      "hpa_mes": "4",
+      "hpa_descrpcion": "Pago de salario de abril 2024 a carlos adolfo sagastume perez"
     }
   ]
 }

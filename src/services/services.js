@@ -17,6 +17,7 @@ const urlTPC = 'http://localhost:3000/tpc_tipo_contrato';
 const urlSDV = 'http://localhost:3000/sdv_solicitudes_vacaciones';
 const urlTMA = 'http://localhost:3000/tma_tipo_marca';
 const urlUSR = 'http://localhost:3000/usr_usuarios';
+const urlHPA = 'http://localhost:3000/hpa_historial_pago';
 
 
 
@@ -455,6 +456,18 @@ const apiService = {
       throw error;
     }
   },
+
+  ////////////////////////// HISTORIAL PAGO //////////////////////////
+
+  getHistorialPago: async () => {
+    try {
+      const response = await axios.get(urlHPA);
+      return response.data;
+    } catch (error) {
+      console.error('Error al realizar la consulta:', error);
+    }
+  },
+
 
   ////////////////////////// USUARIOS //////////////////////////
 

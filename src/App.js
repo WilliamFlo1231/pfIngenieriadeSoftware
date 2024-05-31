@@ -17,6 +17,7 @@ import Plazas from './pages/Plazas';
 import ModificarExpediente from './pages/ModificarExpediente';
 import DashboardEmpleado from './pages/DashboardEmpleado';
 import ConsultaSolicitudVacaciones from './pages/ConsultaSolicitudVacaciones';
+import HistorialPago from './pages/HistorialPago';
 
 function App() {
   return (
@@ -42,6 +43,7 @@ function App() {
             <Route path="/Plazas" element={<Plazas/>} />
             <Route path="/DashboardEmpleado" element={<DashboardEmpleado/>} />
             <Route path="/ConsultaSolicitudVacaciones" element={<ConsultaSolicitudVacaciones/>} />
+            <Route path="/HistorialPago" element={<HistorialPago/>} />
 
 
 

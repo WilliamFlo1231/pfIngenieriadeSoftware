@@ -68,7 +68,7 @@ function DashboardEmpleado() {
             titulo="Solicitar Vacaciones"
             imagen={"https://img.freepik.com/free-psd/travel-sales-background_23-2150350125.jpg?t=st=1716741427~exp=1716745027~hmac=ab4a5b4174e0bab423451cfca1277f25b743e7cdcd41156b410725988647dd25&w=996"} />
         </Link>
-        <Link style={{ textDecoration: "none" }} to={"/Marcacion"}>
+        <Link style={{ textDecoration: "none" }} to={"/HistorialPago"}>
           <CardEmpleado
             titulo="Ver Historial de Pago"
             imagen={"https://img.freepik.com/free-vector/hand-drawn-brazilian-payment-book-template_23-2149890130.jpg?t=st=1716741578~exp=1716745178~hmac=24d0fa111a2799bdcb1b5b579338f4d73f65dc366d8083a2ff8f567fb35c44c6&w=996"} />
