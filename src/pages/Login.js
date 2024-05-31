@@ -15,15 +15,15 @@ function Login() {
     const password = document.getElementById('exampleInputPassword').value;
     const dataUsuarios = await apiService.getUsuarios();
     setUser(dataUsuarios);
-    
+
     const user = dataUsuarios.find(u => u.usr_correo_usuario === email && u.usr_password === password);
     if (user) {
-        // Grabar la cookie
-        Cookies.set('user', JSON.stringify({
-          email: user.usr_correo_usuario,
-          role: user.usr_rol,
-          expid: user.usr_codexp
-        }), { expires: 1 }); // La cookie expirará en 1 día
+      // Grabar la cookie
+      Cookies.set('user', JSON.stringify({
+        email: user.usr_correo_usuario,
+        role: user.usr_rol,
+        expid: user.usr_codexp
+      }), { expires: 1 }); // La cookie expirará en 1 día
 
       console.log(user.usr_usuario)
       console.log("se encontró registro")
@@ -34,14 +34,14 @@ function Login() {
       }
       if (user.usr_rol === 'Administrador') {
         navigate("/DashboardAdmin");
-      }      
-      
+      }
+
     } else {
       Swal.fire('Error', 'Las Credenciales no son correctas', 'error');
       console.error('Usuario no autenticado');
-    }    
+    }
 
-    
+
   }
 
 
@@ -78,36 +78,11 @@ function Login() {
                           placeholder="Ingrese la contraseña"
                         />
                       </div>
-                      <div className="form-group">
-                        <div className="custom-control custom-checkbox small">
-                          <input
-                            type="checkbox"
-                            className="custom-control-input"
-                            id="customCheck"
-                          />
-                          <label className="custom-control-label" htmlFor="customCheck">
-                            Remember Me
-                          </label>
-                        </div>
-                      </div>
-                        <button className="btn btn-primary btn-user btn-block">
-                          Login
-                        </button>
+                      <button className="btn btn-primary btn-user btn-block">
+                        Login
+                      </button>
                       <hr />
-                      <button className="btn btn-google btn-user btn-block">
-                        <i className="fab fa-google fa-fw"></i> Login with Google
-                      </button>
-                      <button className="btn btn-facebook btn-user btn-block">
-                        <i className="fab fa-facebook-f fa-fw"></i> Login with Facebook
-                      </button>
                     </form>
-                    <hr />
-                    <div className="text-center">
-                      <a className="small" href="forgot-password.html">Forgot Password?</a>
-                    </div>
-                    <div className="text-center">
-                      <a className="small" href="register.html">Create an Account!</a>
-                    </div>
                   </div>
                 </div>
               </div>

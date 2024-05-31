@@ -536,6 +536,15 @@
       "sdv_dias": 7,
       "sdv_estado": "Pendiente Aprobacion",
       "id": 5
+    },
+    {
+      "sdv_codexp": 1,
+      "sdv_fecha_solicitud": "2024-05-31",
+      "sdv_desde": "2024-05-31",
+      "sdv_hasta": "2024-06-06",
+      "sdv_dias": 5,
+      "sdv_estado": "Pendiente Aprobacion",
+      "id": 6
     }
   ],
   "usr_usuarios": [
@@ -558,6 +567,16 @@
       "usr_password": "user",
       "usr_rol": "Usuario",
       "id": 2
+    },
+    {
+      "usr_codexp": 1,
+      "usr_username": "test",
+      "usr_nombre_usuario": "test",
+      "usr_correo_usuario": "test@gmail.com",
+      "usr_activo": "Activo",
+      "usr_password": "test",
+      "usr_rol": "Usuario",
+      "id": 3
     }
   ],
   "hpa_historial_pago": [
