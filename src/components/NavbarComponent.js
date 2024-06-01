@@ -28,7 +28,6 @@ const NavbarComponent = () => {
                 Apartado Salarial <i class="fa-solid fa-dollar-sign"></i>
               </a>
               <ul class="dropdown-menu">
-                <li><Link class="dropdown-item" to={"/Plazas"}>Historial de pago</Link></li>
                 <li><Link class="dropdown-item" to={"/ConsultaDescuentos"}>Descuentos</Link></li>
                 <li><Link class="dropdown-item" to={"/ConsultaIngresos"}>Ingresos</Link></li>
                 <li><Link class="dropdown-item" to={"/ConsultaPeriodoPlanilla"}>Periodos de Planilla</Link></li>

@@ -18,37 +18,42 @@ import ModificarExpediente from './pages/ModificarExpediente';
 import DashboardEmpleado from './pages/DashboardEmpleado';
 import ConsultaSolicitudVacaciones from './pages/ConsultaSolicitudVacaciones';
 import HistorialPago from './pages/HistorialPago';
+import PrivateRoute from './utils/PrivateRoute';
+import PrivateRouteAdmin from './utils/PrivateRouteAdmin';
 
 function App() {
   return (
     <div className="App">
-      
-        <Router>
-          <Routes>
-            <Route path="/" element={<Login/>} />
-            <Route path="/HorasExtra" element={<HorasExtra/>} />
-            <Route path="/Marcaciones" element={<Marcaciones/>} />
-            <Route path="/AutoGestion" element={<AutoGestion/>} />
-            <Route path="/Marcacion" element={<Marcacion/>} />
-            <Route path="/IngresoExpediente" element={<IngresoExpediente/>} />
-            <Route path="/SolicitudPermisos" element={<SolicitudPermisos/>} />
-            <Route path="/SolicitudVacaciones" element={<SolicitudVacaciones/>} />
-            <Route path="/ConsultaPeriodoPlanilla" element={<PeriodoPlanilla/>} />
-            <Route path="/ConsultaExpedientes" element={<ConsultaExpedientes/>} />
-            <Route path="/ModificarExpediente/:id" element={<ModificarExpediente/>} />
-            <Route path="/ConsultaDescuentos" element={<Descuentos/>} />
-            <Route path="/ConsultaIngresos" element={<Ingresos/>} />
-            <Route path="/Login" element={<Login/>} />
-            <Route path="/DashboardAdmin" element={<Dashboard/>} />
-            <Route path="/Plazas" element={<Plazas/>} />
-            <Route path="/DashboardEmpleado" element={<DashboardEmpleado/>} />
-            <Route path="/ConsultaSolicitudVacaciones" element={<ConsultaSolicitudVacaciones/>} />
-            <Route path="/HistorialPago" element={<HistorialPago/>} />
+
+      <Router>
+        <Routes>
+          <Route path="/" element={<Login />} />
+          <Route path="/Login" element={<Login />} />
+          <Route element={<PrivateRoute/>}>
+            <Route path="/AutoGestion" element={<AutoGestion />} />
+            <Route path="/Marcacion" element={<Marcacion />} />
+            <Route path="/SolicitudPermisos" element={<SolicitudPermisos />} />
+            <Route path="/SolicitudVacaciones" element={<SolicitudVacaciones />} />
+            <Route path="/DashboardEmpleado" element={<DashboardEmpleado />} />
+            <Route path="/HistorialPago" element={<HistorialPago />} />
+          </Route>
+          <Route element={<PrivateRouteAdmin/>}>
+            <Route path="/ConsultaSolicitudVacaciones" element={<ConsultaSolicitudVacaciones />} />
+            <Route path="/ConsultaPeriodoPlanilla" element={<PeriodoPlanilla />} />
+            <Route path="/ConsultaExpedientes" element={<ConsultaExpedientes />} />
+            <Route path="/ModificarExpediente/:id" element={<ModificarExpediente />} />
+            <Route path="/IngresoExpediente" element={<IngresoExpediente />} />
+            <Route path="/Marcaciones" element={<Marcaciones />} />
+            <Route path="/HorasExtra" element={<HorasExtra />} />
+            <Route path="/ConsultaDescuentos" element={<Descuentos />} />
+            <Route path="/ConsultaIngresos" element={<Ingresos />} />
+            <Route path="/DashboardAdmin" element={<Dashboard />} />
+            <Route path="/Plazas" element={<Plazas />} />
+          </Route>  
 
 
-
-          </Routes>
-        </Router>
+        </Routes>
+      </Router>
     </div>
 
   );

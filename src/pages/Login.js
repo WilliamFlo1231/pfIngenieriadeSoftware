@@ -6,6 +6,12 @@ import Cookies from 'js-cookie';
 
 
 function Login() {
+
+  const eliminaCookie = () => {
+    Cookies.remove('user');
+  }
+
+  
   const navigate = useNavigate();
   const [user, setUser] = useState([]);
 
@@ -44,7 +50,7 @@ function Login() {
 
   }
 
-
+  eliminaCookie();
   return (
     <div className="container">
       <div className="row justify-content-center">

@@ -13,6 +13,8 @@ function Dashboard() {
   const [totalPlazas, setTotalPlazas] = useState(0);
   const [solicitudVacaciones, setSolicitudVacaciones] = useState([]);
   const [totalSolicitudVacaciones, setTotalSolicitudVacaciones] = useState(0);
+  const [marcaciones, setMarcaciones] = useState([]); 
+  const [totalMarcaciones, setTotalMarcaciones] = useState(0);
   const [vacacionesPorMes, setVacacionesPorMes] = useState([0, 0, 0]);
   const [vacacionesPorEstado, setVacacionesPorEstado] = useState([0, 0, 0]); // Nuevo estado para el gráfico de pie
 
@@ -25,9 +27,14 @@ function Dashboard() {
         setPlazas(dataPlazas);
         const dataSolicitudVacaciones = await apiService.getSolicitudVacaciones();
         setSolicitudVacaciones(dataSolicitudVacaciones);
+        const dataMarcaciones = await apiService.getMarcas();
+        setMarcaciones(dataMarcaciones);        
         setTotalExpedientes(dataExpedientes.length);
         setTotalPlazas(dataPlazas.length);
+        setTotalMarcaciones(dataMarcaciones.length);
         setTotalSolicitudVacaciones(dataSolicitudVacaciones.length);
+
+
 
         const currentMonth = new Date().getMonth();
         const counts = [0, 0, 0];
@@ -93,11 +100,12 @@ function Dashboard() {
             tipoBorde={"border-left-info"}
           />
           <CardComponent
-            title="Horas extras pendientes de autorizar"
+            title="Total Marcaciones"
             iconClass="fas fa-dollar-sign"
-            quantity={"5"}
+            quantity={totalMarcaciones}
             tipoTexto={"text-primary"}
             tipoBorde={"border-left-primary"}
+            enlace={"/Marcaciones"}
           />
           <CardComponent
             title="Plazas totales"
