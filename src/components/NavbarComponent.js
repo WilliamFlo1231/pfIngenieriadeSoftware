@@ -39,7 +39,7 @@ const NavbarComponent = () => {
                 Vacaciones y permisos <i class="fa-solid fa-umbrella-beach"></i>
               </a>
               <ul class="dropdown-menu">
-                <li><Link class="dropdown-item" to={"/ConsultaExpedientes"}>Consulta de Expediente</Link></li>
+                <li><Link class="dropdown-item" to={"/ConsultaSolicitudVacaciones"}>Consulta Vacaciones</Link></li>
               </ul>
             </li>
           </ul>

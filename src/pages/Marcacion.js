@@ -25,16 +25,12 @@ const RegistroBotones = ({ tipoMarcas, onRegistro }) => {
             className="btn btn-primary mr-2"
             onClick={() => onRegistro(tipoMarca.id)}
           >{tipoMarca.tma_descripcion}
-            {tipoMarca.tpm_descripcion}
           </button>
         ))}
       </div>
     </div>
   );
 };
-
-
-
 
 const Marcacion = () => {
   const user = Cookies.get('user');
@@ -87,6 +83,11 @@ const Marcacion = () => {
     window.location.reload();
   };
 
+  const getTipoMarcaDescripcion = (codTma) => {
+    const tipoMarca = tipoMarcas.find(t => t.id === codTma);
+    return tipoMarca ? tipoMarca.tma_descripcion : 'Desconocido';
+  };
+
   const columnas = [
     {
       name: 'ID',
@@ -100,7 +101,7 @@ const Marcacion = () => {
     },
     {
       name: 'Tipo de Marca',
-      selector: row => row.mar_estado,
+      selector: row => getTipoMarcaDescripcion(row.mar_codtma),
       sortable: true,
     },
   ];

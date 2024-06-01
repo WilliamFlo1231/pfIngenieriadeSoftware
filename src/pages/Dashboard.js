@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 import NavbarComponent from '../components/NavbarComponent';
 import CardComponent from '../components/CardComponent';
 import apiService from '../services/services';
-import SolicitudVacacionesChart from '../components/SolicitudVacacionesChart'; // Importar el nuevo componente
-import SolicitudVacacionesPieChart from '../components/SolicitudVacacionesPieChart';
+import SolicitudVacacionesChart from '../components/SolicitudVacacionesChart'; 
+import SolicitudVacacionesPieChart from '../components/SolicitudVacacionesPieChart'; // Importar el nuevo componente
 
 function Dashboard() {
   const [expedientes, setExpedientes] = useState([]);
@@ -14,6 +14,7 @@ function Dashboard() {
   const [solicitudVacaciones, setSolicitudVacaciones] = useState([]);
   const [totalSolicitudVacaciones, setTotalSolicitudVacaciones] = useState(0);
   const [vacacionesPorMes, setVacacionesPorMes] = useState([0, 0, 0]);
+  const [vacacionesPorEstado, setVacacionesPorEstado] = useState([0, 0, 0]); // Nuevo estado para el gráfico de pie
 
   useEffect(() => {
     const fetchData = async () => {
@@ -30,13 +31,17 @@ function Dashboard() {
 
         const currentMonth = new Date().getMonth();
         const counts = [0, 0, 0];
+        const estadoCounts = { "Pendiente Aprobacion": 0, "Autorizado": 0, "Rechazado": 0 };
+
         dataSolicitudVacaciones.forEach((solicitud) => {
           const solicitudMonth = new Date(solicitud.sdv_fecha_solicitud).getMonth();
           if (solicitudMonth >= currentMonth - 2 && solicitudMonth <= currentMonth) {
             counts[solicitudMonth - (currentMonth - 2)]++;
           }
+          estadoCounts[solicitud.sdv_estado]++;
         });
         setVacacionesPorMes(counts);
+        setVacacionesPorEstado([estadoCounts["Pendiente Aprobacion"], estadoCounts["Autorizado"], estadoCounts["Rechazado"]]);
 
       } catch (error) {
         console.error('Error al obtener datos:', error);
@@ -121,7 +126,7 @@ function Dashboard() {
           <div className="col-xl-4 col-lg-5">
             <div className="card shadow mb-4">
               <div className="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                <h6 className="m-0 font-weight-bold text-primary">Revenue Sources</h6>
+                <h6 className="m-0 font-weight-bold text-primary">Solicitudes de Vacaciones por Estado</h6>
                 <div className="dropdown no-arrow">
                   <Link className="dropdown-toggle" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i className="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
@@ -137,17 +142,17 @@ function Dashboard() {
               </div>
               <div className="card-body">
                 <div className="chart-pie pt-4 pb-2">
-                  <SolicitudVacacionesPieChart/>
+                  <SolicitudVacacionesPieChart data={vacacionesPorEstado} />
                 </div>
                 <div className="mt-4 text-center small">
                   <span className="mr-2">
-                    <i className="fas fa-circle text-primary"></i> Direct
+                    <i className="fas fa-circle text-primary"></i> Pendiente Aprobacion
                   </span>
                   <span className="mr-2">
-                    <i className="fas fa-circle text-success"></i> Social
+                    <i className="fas fa-circle text-success"></i> Autorizado
                   </span>
                   <span className="mr-2">
-                    <i className="fas fa-circle text-info"></i> Referral
+                    <i className="fas fa-circle text-danger"></i> Rechazado
                   </span>
                 </div>
               </div>

@@ -48,6 +48,27 @@
       "mar_codtma": 2,
       "mar_codexp": 1,
       "id": 7
+    },
+    {
+      "mar_hora": "21:14:09",
+      "mar_fecha": "31/5/2024",
+      "mar_codtma": 1,
+      "mar_codexp": 2,
+      "id": 8
+    },
+    {
+      "mar_hora": "21:16:00",
+      "mar_fecha": "31/5/2024",
+      "mar_codtma": 1,
+      "mar_codexp": 2,
+      "id": 9
+    },
+    {
+      "mar_hora": "21:26:21",
+      "mar_fecha": "31/5/2024",
+      "mar_codtma": 1,
+      "mar_codexp": 2,
+      "id": 10
     }
   ],
   "ppl_periodos_planilla": [
@@ -167,23 +188,6 @@
       "exp_descuenta_renta": "0",
       "exp_decuenta_seguro_social": "0",
       "id": 5
-    },
-    {
-      "exp_nombres": "Edgar ",
-      "exp_apellidos": "Rodas",
-      "exp_codtpl": 1,
-      "exp_codjor": 1,
-      "exp_codfpa": 2,
-      "exp_codtpc": 1,
-      "exp_codplz": 2,
-      "exp_sexo": "Masculino",
-      "exp_fecha_nacimiento": "2002-08-19",
-      "exp_identificacion": "1111111111111111",
-      "exp_cuenta_banco": "321321654654",
-      "exp_fecha_ini": "2024-05-27",
-      "exp_descuenta_renta": "1",
-      "exp_decuenta_seguro_social": "1",
-      "id": 6
     }
   ],
   "tpl_tipo_planilla": [
