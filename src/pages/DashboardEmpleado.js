@@ -37,6 +37,9 @@ function DashboardEmpleado() {
   };
   var userData
 
+
+
+
   const nombreExp = getExpedienteNombres(parseInt(userData.expid));
   const noDPI = expediente.exp_identificacion;
   const fechaInicio = expediente.exp_fecha_ini;

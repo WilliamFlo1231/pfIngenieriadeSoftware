@@ -20,6 +20,34 @@
       "mar_estado": "Inicio Almuerzo",
       "mar_codexp": 2,
       "id": 3
+    },
+    {
+      "mar_hora": "12:16:53",
+      "mar_fecha": "31/5/2024",
+      "mar_estado": "Entrada",
+      "mar_codexp": 1,
+      "id": 4
+    },
+    {
+      "mar_hora": "20:10:54",
+      "mar_fecha": "31/5/2024",
+      "mar_codtma": "Entrada",
+      "mar_codexp": 1,
+      "id": 5
+    },
+    {
+      "mar_hora": "20:14:42",
+      "mar_fecha": "31/5/2024",
+      "mar_codtma": 1,
+      "mar_codexp": 1,
+      "id": 6
+    },
+    {
+      "mar_hora": "20:14:45",
+      "mar_fecha": "31/5/2024",
+      "mar_codtma": 2,
+      "mar_codexp": 1,
+      "id": 7
     }
   ],
   "ppl_periodos_planilla": [
@@ -498,7 +526,7 @@
       "sdv_desde": "2024-05-26",
       "sdv_hasta": "2024-05-29",
       "sdv_dias": 3,
-      "sdv_estado": "Aprobado",
+      "sdv_estado": "Rechazado",
       "id": 1
     },
     {
@@ -540,6 +568,24 @@
     {
       "sdv_codexp": 1,
       "sdv_fecha_solicitud": "2024-05-31",
+      "sdv_desde": "2024-05-31",
+      "sdv_hasta": "2024-06-06",
+      "sdv_dias": 5,
+      "sdv_estado": "Pendiente Aprobacion",
+      "id": 6
+    },
+    {
+      "sdv_codexp": 1,
+      "sdv_fecha_solicitud": "2024-04-30",
+      "sdv_desde": "2024-05-31",
+      "sdv_hasta": "2024-06-06",
+      "sdv_dias": 5,
+      "sdv_estado": "Pendiente Aprobacion",
+      "id": 6
+    },
+    {
+      "sdv_codexp": 1,
+      "sdv_fecha_solicitud": "2024-04-29",
       "sdv_desde": "2024-05-31",
       "sdv_hasta": "2024-06-06",
       "sdv_dias": 5,

@@ -1,8 +1,15 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import Cookies from 'js-cookie';
+
 
 
 function NavbarEmpleadoComponent() {
+
+  const eliminarCookie = () => {
+    Cookies.remove('user');
+  }
+
   return (
     <nav class="navbar navbar-expand-lg bg-body-tertiary" >
       <div class="container-fluid">
@@ -25,7 +32,7 @@ function NavbarEmpleadoComponent() {
                 Auto Gestion <i class="fa-solid fa-list-check"></i>
               </a>
               <ul class="dropdown-menu">
-                <li><Link class="dropdown-item" to={"/Plazas"}>Constancia Laboral</Link></li>
+                <li><Link class="dropdown-item" to={"/HistorialPago"}>Historial de Pago</Link></li>
               </ul>
             </li>
             <li class="nav-item dropdown">
@@ -39,7 +46,7 @@ function NavbarEmpleadoComponent() {
           </ul>
           <div class="d-flex">
             <Link to={"/Login"}>
-              <button class="btn btn-outline-danger px-4" >Salir</button>
+              <button class="btn btn-outline-danger px-4" onClick={eliminarCookie}>Salir</button>
             </Link>
           </div>
         </div>

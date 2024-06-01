@@ -10,6 +10,9 @@ import Cookies from 'js-cookie';
 
 
 const RegistroBotones = ({ tipoMarcas, onRegistro }) => {
+
+
+
   return (
     <div className="text-center">
       {/* Mostrar el componente Reloj */}
@@ -20,7 +23,7 @@ const RegistroBotones = ({ tipoMarcas, onRegistro }) => {
           <button
             key={index}
             className="btn btn-primary mr-2"
-            onClick={() => onRegistro(tipoMarca.tma_descripcion)}
+            onClick={() => onRegistro(tipoMarca.id)}
           >{tipoMarca.tma_descripcion}
             {tipoMarca.tpm_descripcion}
           </button>
@@ -67,6 +70,8 @@ const Marcacion = () => {
     fetchData();
   }, []);
 
+  const filtraMarcaciones = marcas.filter((marca) => marca.mar_codexp === parseInt(userData.expid));
+
   const handleRegistro = (tipo) => {
     const now = new Date();
     const fechaActual = now.toLocaleDateString();
@@ -74,7 +79,7 @@ const Marcacion = () => {
     const marca = {
       mar_hora: horaActual,
       mar_fecha: fechaActual,
-      mar_estado: tipo,
+      mar_codtma: tipo,
       mar_codexp: parseInt(userData.expid),
     };
 
@@ -108,7 +113,7 @@ const Marcacion = () => {
       </div>
       <RegistroBotones tipoMarcas={tipoMarcas} onRegistro={handleRegistro} />
       <hr />
-      <TableComponent datostabla={marcas} columnas={columnas} />
+      <TableComponent datostabla={filtraMarcaciones} columnas={columnas} />
     </div>
   );
 };

@@ -3,9 +3,16 @@ import NavbarComponent from '../components/NavbarComponent'
 import TableComponent from '../components/TableComponent'
 import apiService from '../services/services';
 import Swal from 'sweetalert2'
+import Cookies from 'js-cookie';
 
 //ESTO UNICAMENTE LO VE EL ADMIN
 const Marcaciones = () => {
+  const user = Cookies.get('user');
+  var userData = {};
+  if (user) {
+    userData = JSON.parse(user);
+  }
+
   const [marcas, setMarcas] = useState([]);
   const [expedientes, setExpedientes] = useState([]);
 
@@ -32,6 +39,8 @@ const Marcaciones = () => {
 
     fetchData();
   }, []);
+
+  
 
   const handleConsultaMarcaciones = async (id) => {
       try {
@@ -112,6 +121,7 @@ const Marcaciones = () => {
     });
   };
 
+
   const accionesBotones = (row) => (
     <div className="opcionesBTN">
       <button type="button" className="btn btn-outline-warning" onClick={() => handleConsultaMarcaciones(row.id)}><i className="fa-solid fa-info"></i></button>
@@ -145,7 +155,7 @@ const Marcaciones = () => {
       name: 'Tipo de Marca',
       selector: row => row.mar_estado,
       sortable: true,
-    },
+    }, 
     {
       name: 'Acciones',
       cell: accionesBotones,
