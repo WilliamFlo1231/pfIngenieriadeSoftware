@@ -6,6 +6,41 @@
       "mar_codtma": 1,
       "mar_codexp": 1,
       "id": 1
+    },
+    {
+      "mar_hora": "19:06:34",
+      "mar_fecha": "1/6/2024",
+      "mar_codtma": 1,
+      "mar_codexp": 1,
+      "id": 2
+    },
+    {
+      "mar_hora": "19:06:37",
+      "mar_fecha": "1/6/2024",
+      "mar_codtma": 2,
+      "mar_codexp": 1,
+      "id": 3
+    },
+    {
+      "mar_hora": "19:06:39",
+      "mar_fecha": "1/6/2024",
+      "mar_codtma": 3,
+      "mar_codexp": 1,
+      "id": 4
+    },
+    {
+      "mar_hora": "19:06:41",
+      "mar_fecha": "1/6/2024",
+      "mar_codtma": 4,
+      "mar_codexp": 1,
+      "id": 5
+    },
+    {
+      "mar_hora": "19:06:43",
+      "mar_fecha": "1/6/2024",
+      "mar_codtma": 5,
+      "mar_codexp": 1,
+      "id": 6
     }
   ],
   "ppl_periodos_planilla": [
@@ -43,7 +78,7 @@
   "exp_expedientes": [
     {
       "exp_nombres": "Juan carlos",
-      "exp_apellidos": "Pérez",
+      "exp_apellidos": "patricio",
       "exp_codtpl": 1,
       "exp_codjor": 1,
       "exp_codfpa": 1,
@@ -178,17 +213,17 @@
       "id": 8
     },
     {
-      "exp_nombres": "juan",
-      "exp_apellidos": "moralesor2",
-      "exp_codtpl": 1,
-      "exp_codjor": 1,
-      "exp_codfpa": 1,
-      "exp_codtpc": 1,
+      "exp_nombres": "Juan carlos",
+      "exp_apellidos": "patricio",
+      "exp_codtpl": 2,
+      "exp_codjor": 2,
+      "exp_codfpa": 4,
+      "exp_codtpc": 3,
       "exp_codplz": 1,
-      "exp_sexo": "Femenino",
+      "exp_sexo": "Masculino",
       "exp_fecha_nacimiento": "2002-08-19",
-      "exp_identificacion": "1234567890123",
-      "exp_cuenta_banco": "1234567890",
+      "exp_identificacion": "1234567890",
+      "exp_cuenta_banco": "0123456789",
       "exp_fecha_ini": "2024-06-01",
       "exp_descuenta_renta": "0",
       "exp_decuenta_seguro_social": "0",
@@ -374,15 +409,15 @@
       "plz_fecha_fin": "2024-12-31"
     },
     {
-      "plz_codcco": "5",
-      "plz_nombre": "Soporte",
+      "plz_codcco": "1",
+      "plz_nombre": "Soporte QA",
       "plz_es_temporal": "Verdadero",
       "plz_fecha_ini": "2024-06-01",
       "plz_fecha_fin": "2024-12-31",
       "id": 5
     }
   ],
-  "cco_centro_costos": [
+  "cco_centro_de_costo": [
     {
       "id": 1,
       "cco_descripcion": "Administración",
@@ -538,7 +573,7 @@
       "sdv_desde": "2024-05-29",
       "sdv_hasta": "2024-06-05",
       "sdv_dias": 6,
-      "sdv_estado": "Pendiente Aprobacion",
+      "sdv_estado": "Autorizado",
       "id": 4
     },
     {
@@ -547,7 +582,7 @@
       "sdv_desde": "2024-05-30",
       "sdv_hasta": "2024-06-07",
       "sdv_dias": 7,
-      "sdv_estado": "Pendiente Aprobacion",
+      "sdv_estado": "Autorizado",
       "id": 5
     },
     {
@@ -556,26 +591,17 @@
       "sdv_desde": "2024-05-31",
       "sdv_hasta": "2024-06-06",
       "sdv_dias": 5,
-      "sdv_estado": "Pendiente Aprobacion",
+      "sdv_estado": "Rechazado",
       "id": 6
     },
     {
       "sdv_codexp": 1,
-      "sdv_fecha_solicitud": "2024-04-30",
-      "sdv_desde": "2024-05-31",
-      "sdv_hasta": "2024-06-06",
-      "sdv_dias": 5,
-      "sdv_estado": "Pendiente Aprobacion",
-      "id": 6
-    },
-    {
-      "sdv_codexp": 1,
-      "sdv_fecha_solicitud": "2024-04-29",
-      "sdv_desde": "2024-05-31",
-      "sdv_hasta": "2024-06-06",
-      "sdv_dias": 5,
-      "sdv_estado": "Pendiente Aprobacion",
-      "id": 6
+      "sdv_fecha_solicitud": "2024-06-02",
+      "sdv_desde": "2024-06-03",
+      "sdv_hasta": "2024-06-14",
+      "sdv_dias": 9,
+      "sdv_estado": "Autorizado",
+      "id": 7
     }
   ],
   "usr_usuarios": [

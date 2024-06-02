@@ -15,6 +15,8 @@ const Marcaciones = () => {
 
   const [marcas, setMarcas] = useState([]);
   const [expedientes, setExpedientes] = useState([]);
+  const [tipoMarcas, setTipoMarcas] = useState([]);
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -24,6 +26,9 @@ const Marcaciones = () => {
 
         const dataExpedientes = await apiService.getExpedientes();
         setExpedientes(dataExpedientes);
+
+        const dataTipoMarcas = await apiService.getTipoMarcas();
+        setTipoMarcas(dataTipoMarcas);
 
 
       } catch (error) {
@@ -41,11 +46,16 @@ const Marcaciones = () => {
   }, []);
 
   
+  const getTipoMarcaDescripcion = (codTma) => {
+    const tipoMarca = tipoMarcas.find(t => t.id === codTma);
+    return tipoMarca ? tipoMarca.tma_descripcion : 'Desconocido';
+  };
 
   const handleConsultaMarcaciones = async (id) => {
       try {
         const marcacion = await apiService.getMarcaId(id);
         const descEXP = getExpedienteNombres(marcacion.mar_codexp)
+        const descTMA = getTipoMarcaDescripcion(marcacion.mar_codtma);
         Swal.fire({
           title: 'Información de la Marcación',
           html: `
@@ -54,7 +64,7 @@ const Marcaciones = () => {
               <p><strong>Nombre Expediente:</strong> ${descEXP}</p>
               <p><strong>Fecha marcacion:</strong> ${marcacion.mar_fecha}</p>
               <p><strong>Hora Marcacion:</strong> ${marcacion.mar_hora}</p>
-              <p><strong>Estado:</strong> ${marcacion.mar_estado}</p>
+              <p><strong>Estado:</strong> ${descTMA}</p>
             </div>
           `,
           icon: 'info',
@@ -153,7 +163,7 @@ const Marcaciones = () => {
     },
     {
       name: 'Tipo de Marca',
-      selector: row => row.mar_estado,
+      selector: row => getTipoMarcaDescripcion(row.mar_codtma),
       sortable: true,
     }, 
     {
