@@ -3,8 +3,10 @@ import { useParams } from 'react-router-dom'; // Asumiendo que usas react-router
 import NavbarComponent from '../components/NavbarComponent';
 import Swal from 'sweetalert2';
 import apiService from '../services/services';
+import { useNavigate } from "react-router-dom";
 
 function ModificarExpediente() {
+  const navigate = useNavigate();
   const { id } = useParams(); // Obtener el ID del expediente a modificar desde la URL
   console.log('ID del expediente:', id);
   const [nombres, setNombres] = useState('');
@@ -138,6 +140,8 @@ function ModificarExpediente() {
         confirmButtonColor: '#3085d6',
         confirmButtonText: 'Ok',
       });
+
+      navigate('/ConsultaExpedientes');
       // Puedes redirigir a otra página si es necesario
     } catch (error) {
       Swal.fire({

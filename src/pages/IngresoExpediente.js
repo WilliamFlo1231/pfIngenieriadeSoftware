@@ -2,9 +2,11 @@ import React, { useState, useEffect } from 'react';
 import NavbarComponent from '../components/NavbarComponent';
 import Swal from 'sweetalert2'
 import apiService from '../services/services';
+import { useNavigate } from "react-router-dom";
 
 
 function IngresoExpediente() {
+  const navigate = useNavigate();
   const [nombres, setNombres] = useState('');
   const [apellidos, setApellidos] = useState('');
   const [tipoPlanilla, setTipoPlanilla] = useState('');
@@ -127,8 +129,9 @@ function IngresoExpediente() {
         title: 'Expediente añadido exitosamente',
         icon: 'success',
         confirmButtonColor: '#3085d6',
-        confirmButtonText: 'Ok',
+        confirmButtonText: 'Ok',                
       });
+      navigate('/ConsultaExpedientes');
       // Resetea el formulario si es necesario
       setNombres('');
       setApellidos('');

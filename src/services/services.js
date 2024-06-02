@@ -2,7 +2,7 @@ import axios from 'axios';
 
 
 const urlPPL = 'http://localhost:3000/ppl_periodos_planilla';
-const urlCTC = 'http://localhost:3000/cco_centro_costos';
+const urlCTC = 'http://localhost:3000/cco_centro_de_costo';
 const urlPLZ = 'http://localhost:3000/plz_plazas';
 const urlINN = 'http://localhost:3000/inn_ingresos';
 const urlTPL = 'http://localhost:3000/tpl_tipo_planilla';
